@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="482f9ea2-5444-4f77-8572-55aabbdfdf48" name="Default Changelist" comment="zerobank">
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/zerobank/pages/AccountActivityNavigation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/zerobank/pages/AccountActivityNavigation.java" afterDir="false" />
+    <list default="true" id="482f9ea2-5444-4f77-8572-55aabbdfdf48" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +194,28 @@
       <option name="project" value="LOCAL" />
       <updated>1577768955618</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="zerobank">
+      <created>1577769468405</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1577769468405</updated>
+    </task>
+    <task id="LOCAL-00005" summary="zerobank">
+      <created>1577769568026</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1577769568026</updated>
+    </task>
+    <task id="LOCAL-00006" summary="zerobank">
+      <created>1577769582111</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1577769582111</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -206,30 +227,30 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="404" y="265" width="471" height="273" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1280.800@0.0.1280.800" timestamp="1577239732910" />
-    <state x="89" y="23" width="777" height="777" key="CommitChangelistDialog2" timestamp="1577769567604">
+    <state x="89" y="23" width="777" height="777" key="CommitChangelistDialog2" timestamp="1577769581550">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state x="89" y="23" width="777" height="777" key="CommitChangelistDialog2/0.23.1280.777@0.23.1280.777" timestamp="1577769567604" />
-    <state width="1238" height="161" key="GridCell.Tab.0.bottom" timestamp="1577769520190">
+    <state x="89" y="23" width="777" height="777" key="CommitChangelistDialog2/0.23.1280.777@0.23.1280.777" timestamp="1577769581550" />
+    <state width="1238" height="161" key="GridCell.Tab.0.bottom" timestamp="1577769596867">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state width="1238" height="283" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1577317651569" />
-    <state width="1238" height="161" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1577769520190" />
-    <state width="1238" height="161" key="GridCell.Tab.0.center" timestamp="1577769520186">
+    <state width="1238" height="161" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1577769596867" />
+    <state width="1238" height="161" key="GridCell.Tab.0.center" timestamp="1577769596858">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state width="1238" height="283" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1577317651567" />
-    <state width="1238" height="161" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1577769520186" />
-    <state width="1238" height="161" key="GridCell.Tab.0.left" timestamp="1577769520177">
+    <state width="1238" height="161" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1577769596858" />
+    <state width="1238" height="161" key="GridCell.Tab.0.left" timestamp="1577769596858">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state width="1238" height="283" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1577317651566" />
-    <state width="1238" height="161" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1577769520177" />
-    <state width="1238" height="161" key="GridCell.Tab.0.right" timestamp="1577769520187">
+    <state width="1238" height="161" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1577769596858" />
+    <state width="1238" height="161" key="GridCell.Tab.0.right" timestamp="1577769596862">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
     <state width="1238" height="283" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1577317651568" />
-    <state width="1238" height="161" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1577769520187" />
+    <state width="1238" height="161" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1577769596862" />
     <state width="1236" height="262" key="GridCell.Tab.1.bottom" timestamp="1577313950512">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -251,10 +272,10 @@
     </state>
     <state x="140" y="39" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1577227385605" />
     <state x="140" y="61" key="SettingsEditor/0.23.1280.777@0.23.1280.777" timestamp="1577317219705" />
-    <state x="240" y="153" key="Vcs.Push.Dialog.v2" timestamp="1577769479278">
+    <state x="240" y="153" key="Vcs.Push.Dialog.v2" timestamp="1577769586111">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
-    <state x="240" y="153" key="Vcs.Push.Dialog.v2/0.23.1280.777@0.23.1280.777" timestamp="1577769479278" />
+    <state x="240" y="153" key="Vcs.Push.Dialog.v2/0.23.1280.777@0.23.1280.777" timestamp="1577769586111" />
     <state x="17" y="113" key="new project wizard" timestamp="1577389351352">
       <screen x="0" y="23" width="1280" height="777" />
     </state>
