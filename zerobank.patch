@@ -1,0 +1,2404 @@
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.gitignore	(date 1577768784562)
++++ .idea/.gitignore	(date 1577768784562)
+@@ -0,0 +1,2 @@
++# Default ignored files
++/workspace.xml
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1577768792056)
++++ .idea/vcs.xml	(date 1577768792056)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/test/java/com/zerobank/runners/CukesRunner.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/runners/CukesRunner.java	(date 1577237988744)
++++ src/test/java/com/zerobank/runners/CukesRunner.java	(date 1577237988744)
+@@ -0,0 +1,19 @@
++package com.zerobank.runners;
++
++import io.cucumber.junit.Cucumber;
++import io.cucumber.junit.CucumberOptions;
++import org.junit.runner.RunWith;
++
++@RunWith(Cucumber.class)
++@CucumberOptions(
++        features = "src/zerobank/resources/features",
++        glue = "com/zerobank/step_definitions",
++        dryRun = false,
++        tags = "@smoke_test",
++        plugin = {"html:target/default-cucumber-reports",
++                "json:target/cucumber.json"
++        }
++)
++        public class CukesRunner{
++
++}
+Index: target/test-classes/features/AccountActivityNavigation.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/test-classes/features/AccountActivityNavigation.feature	(date 1577307857805)
++++ target/test-classes/features/AccountActivityNavigation.feature	(date 1577307857805)
+@@ -0,0 +1,29 @@
++Feature: Navigating to specific accounts in Accounts Activity
++
++  Background: open login page and login as Account Manager
++    Given the user is logged in
++
++  Scenario: Savings account redirect
++    When the user clicks on Savings link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Savings" selected
++
++  Scenario: Brokerage account redirect
++    When the user clicks on Brokerage link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Brokerage" selected
++
++  Scenario: Checking account redirect
++    When the user clicks on Checking link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Checking" selected
++
++  Scenario: Credit Card account redirec
++    When the user clicks on Credit Card link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Credit Card" selected
++
++  Scenario: Loan account redirect
++    When the user clicks on Loan link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Loan" selected
+\ No newline at end of file
+Index: target/test-classes/features/PurchaseForeignCurrency.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/test-classes/features/PurchaseForeignCurrency.feature	(date 1577237989942)
++++ target/test-classes/features/PurchaseForeignCurrency.feature	(date 1577237989942)
+@@ -0,0 +1,26 @@
++Feature: Purchase Foreign Currency
++Background: the user accesses the Purchase foreign currency cash tab
++  Given the user accesses the Purchase foreign currency cash tab
++
++  Scenario: Available currencies
++    Then following currencies should be available
++      |Australia (dollar) |
++      |Canada (dollar) |
++      |Switzerland (franc) |
++      |China (yuan) |
++      |Denmark (krone) |
++      |Eurozone (euro) |
++      |Great Britain (pound)|
++      |Japan (yen) |
++      |Mexico (peso) |
++      |Norway (krone) |
++      |New Zealand (dollar) |
++      |Singapore (dollar) |
++
++  Scenario: Error message for not selecting currency
++    When user tries to calculate cost without selecting a currency
++    Then error message should be displayed
++
++  Scenario: Error message for not entering value
++    When user tries to calculate cost without entering a value
++    Then error message should be displayed
+\ No newline at end of file
+Index: src/test/java/com/zerobank/utilities/ConfigurationReader.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/utilities/ConfigurationReader.java	(date 1577223940937)
++++ src/test/java/com/zerobank/utilities/ConfigurationReader.java	(date 1577223940937)
+@@ -0,0 +1,39 @@
++package com.zerobank.utilities;
++
++import java.io.FileInputStream;
++import java.io.IOException;
++import java.util.Properties;
++
++//ConfigurationReader.configFile.getProperty("browser") direct access
++//ConfigurationReader.getProperty("browser")
++public class ConfigurationReader {
++    //this class will be responsible for loading properties file and will provide access
++    //to values based on key names
++    //we use Properties class to load custom .properties files
++    private static Properties configFile;
++
++    static {
++        try {
++            //provides access to file
++            //try/catch block stands for handling exceptions
++            //if exception occurs, code inside a catch block will be executed
++            //any class that is related to InputOutput produce checked exceptions
++            //without handling checked exception, you cannot run a code
++            FileInputStream fileInputStream = new FileInputStream("configuration.properties");
++            //initialize properties object
++            configFile = new Properties();
++            //load configuration.properties file
++            configFile.load(fileInputStream);
++            //close input stream
++            fileInputStream.close();
++        } catch (IOException e) {
++            System.out.println("Failed to load properties file!");
++            e.printStackTrace();
++        }
++    }
++
++    public static String getProperty(String key) {
++        return configFile.getProperty(key);
++    }
++
++}
+Index: target/test-classes/features/AddNewPayee.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/test-classes/features/AddNewPayee.feature	(date 1577227689162)
++++ target/test-classes/features/AddNewPayee.feature	(date 1577227689162)
+@@ -0,0 +1,9 @@
++Feature: Add new payee under pay bills
++  Scenario: Add a new payee
++    Given Add New Payee tab
++    And creates new payee using following information
++      |Payee Name | The Law Offices of Hyde, Price & Scharks|
++      |Payee Address | 100 Same st, Anytown, USA, 10001 |
++      |Account | Checking |
++      |Payee details | XYZ account |
++    Then message "The new payee The Law Offices of Hyde, Price & Scharks was successfully created." should be displayed
+\ No newline at end of file
+Index: src/test/java/com/zerobank/utilities/Driver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/utilities/Driver.java	(date 1577223940926)
++++ src/test/java/com/zerobank/utilities/Driver.java	(date 1577223940926)
+@@ -0,0 +1,61 @@
++package com.zerobank.utilities;
++
++import io.github.bonigarcia.wdm.WebDriverManager;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.openqa.selenium.chrome.ChromeOptions;
++import org.openqa.selenium.firefox.FirefoxDriver;
++
++public class Driver {
++    private static WebDriver driver;
++
++    //    you cannot do like this, if constructor is private Driver obj = new Driver()
++    private Driver() {
++
++    }
++    //if switch statement complains on string parameter
++    //change java version to 7+, better at least 8
++    //File--> Project Structure--> Set Project language level to at least 8 or above
++    public static WebDriver get() {
++        //if webdriver object was not created yet
++        if (driver == null) {
++            //create webdriver object based on browser value from properties file
++            String browser = ConfigurationReader.getProperty("browser");
++            switch (browser) {
++                case "chrome":
++                    WebDriverManager.chromedriver().setup();
++                    //to configure chrome browser for tests
++                    driver = new ChromeDriver();
++                    break;
++                case "chrome_headless":
++                    WebDriverManager.chromedriver().setup();
++                    //to configure chrome browser for tests
++                    ChromeOptions options = new ChromeOptions();
++                    //to run tests without interface, set to true
++                    options.setHeadless(true);
++                    driver = new ChromeDriver(options);
++                    break;
++                case "firefox":
++                    WebDriverManager.firefoxdriver().setup();
++                    driver = new FirefoxDriver();
++                    break;
++                default:
++                    //if browser type is wrong, throw exception.
++                    //no browser will be opened
++                    throw new RuntimeException("Wrong browser type!");
++            }
++        }
++        //if webdriver object was created - you can use it
++        return driver;
++    }
++
++    public static void close() {
++        //if driver still exist
++        if (driver != null) {
++            //close all browsers
++            driver.quit();
++            //destroy driver object, ready for gc
++            driver = null;
++        }
++    }
++}
+Index: src/test/java/com/zerobank/utilities/BrowserUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/utilities/BrowserUtils.java	(date 1577223940919)
++++ src/test/java/com/zerobank/utilities/BrowserUtils.java	(date 1577223940919)
+@@ -0,0 +1,187 @@
++package com.zerobank.utilities;
++
++import org.apache.commons.io.FileUtils;
++import org.openqa.selenium.*;
++import org.openqa.selenium.support.ui.*;
++
++import java.io.File;
++import java.io.IOException;
++import java.text.SimpleDateFormat;
++import java.time.Duration;
++import java.util.ArrayList;
++import java.util.Date;
++import java.util.List;
++import java.util.function.Function;
++
++public class BrowserUtils {
++
++    //It will be used to pause our test execution
++    //just provide number of seconds as a parameter
++    public static void wait(int seconds) {
++        try {
++            Thread.sleep(1000 * seconds);
++        } catch (InterruptedException e) {
++            e.printStackTrace();
++        }
++    }
++
++    /**
++     * Waits for element to be not stale
++     *
++     * @param element
++     */
++    public static void waitForStaleElement(WebElement element) {
++        int y = 0;
++        while (y <= 15) {
++            try {
++                element.isDisplayed();
++                break;
++            } catch (StaleElementReferenceException st) {
++                y++;
++                try {
++                    Thread.sleep(200);
++                } catch (InterruptedException e) {
++                    e.printStackTrace();
++                }
++            }
++            break;
++        }
++    }
++
++    /**
++     * Waits for the provided element to be visible on the page
++     *
++     * @param element
++     * @param timeToWaitInSec
++     * @return
++     */
++    public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
++        WebDriverWait wait = new WebDriverWait(Driver.get(), timeToWaitInSec);
++        return wait.until(ExpectedConditions.visibilityOf(element));
++    }
++
++    /**
++     * Clicks on an element using JavaScript
++     *
++     * @param element
++     */
++    public static void clickWithJS(WebElement element) {
++        ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].scrollIntoView(true);", element);
++        ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].click();", element);
++    }
++
++    /**
++     * Waits for provided element to be clickable
++     *
++     * @param element
++     * @param timeout
++     * @return
++     */
++    public static WebElement waitForClickablility(WebElement element, int timeout) {
++        WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
++        return wait.until(ExpectedConditions.elementToBeClickable(element));
++    }
++
++    //    PLEASE INSERT THIS METHOD INTO BROWSER UTILS
++    /*
++     * takes screenshot
++     * whenever you call this method
++     * it takes screenshot and returns location of the screenshot
++     * @param name of test or whatever your like
++     * take a name of a test and returns a path to screenshot takes
++     */
++    public static String getScreenshot(String name) {
++        // name the screenshot with the current date time to avoid duplicate name
++//        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));​
++        SimpleDateFormat df = new SimpleDateFormat("-yyyy-MM-dd-HH-mm");
++        String date = df.format(new Date());
++        // TakesScreenshot ---> interface from selenium which takes screenshots
++        TakesScreenshot ts = (TakesScreenshot) Driver.get();
++        File source = ts.getScreenshotAs(OutputType.FILE);
++        // full path to the screenshot location
++        //where screenshot will be stored
++        //System.getProperty("user.dir") returns path to the project as a string
++        String target = System.getProperty("user.dir") + "/test-output/Screenshots/" + name + date + ".png";
++        File finalDestination = new File(target);
++        // save the screenshot to the path given
++        try {
++            FileUtils.copyFile(source, finalDestination);
++        } catch (IOException e) {
++            e.printStackTrace();
++        }
++        return target;
++    }
++
++    /**
++     * Wait 15 seconds with polling interval of 200 milliseconds then click
++     *
++     * @param webElement of element
++     */
++    public static void clickWithWait(WebElement webElement) {
++        Wait wait = new FluentWait<>(Driver.get())
++                .withTimeout(Duration.ofSeconds(15))
++                .pollingEvery(Duration.ofMillis(800))
++                .ignoring(NoSuchElementException.class)
++                .ignoring(ElementNotVisibleException.class)
++                .ignoring(ElementClickInterceptedException.class)
++                .ignoring(StaleElementReferenceException.class)
++                .ignoring(WebDriverException.class);
++        WebElement element = (WebElement) wait.until((Function<WebDriver, WebElement>) driver -> webElement);
++        try {
++            element.click();
++        } catch (WebDriverException e) {
++            System.out.println(e.getMessage());
++            try {
++                Thread.sleep(1000);
++            } catch (InterruptedException ex) {
++                ex.printStackTrace();
++            }
++        }
++    }
++
++    /**
++     * waits for backgrounds processes on the browser to complete
++     *
++     * @param timeOutInSeconds
++     */
++    public static void waitForPageToLoad(long timeOutInSeconds) {
++        ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
++        try {
++            WebDriverWait wait = new WebDriverWait(Driver.get(), timeOutInSeconds);
++            wait.until(expectation);
++        } catch (Throwable error) {
++            error.printStackTrace();
++        }
++    }
++
++    /**
++     * Wait for proper page title
++     *
++     * @param pageTitle
++     */
++    public static void waitForPageTitle(String pageTitle) {
++        WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
++        wait.until(ExpectedConditions.titleIs(pageTitle));
++
++    }
++
++    /**
++     * This method will convert list of WebElements into list of string
++     *
++     * @param listOfWebElements
++     * @return list of strings
++     */
++    public static List<String> getListOfString(List<WebElement> listOfWebElements) {
++        List<String> listOfStrings = new ArrayList<>();
++        for (WebElement element : listOfWebElements) {
++            String value = element.getText().trim();
++            //if there is no text
++            //do not add this blank text into list
++            if (value.length() > 0) {
++                listOfStrings.add(value);
++            }
++        }
++        return listOfStrings;
++    }
++
++}
+Index: src/test/resources/features/AddNewPayee.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/resources/features/AddNewPayee.feature	(date 1577227688544)
++++ src/test/resources/features/AddNewPayee.feature	(date 1577227688544)
+@@ -0,0 +1,9 @@
++Feature: Add new payee under pay bills
++  Scenario: Add a new payee
++    Given Add New Payee tab
++    And creates new payee using following information
++      |Payee Name | The Law Offices of Hyde, Price & Scharks|
++      |Payee Address | 100 Same st, Anytown, USA, 10001 |
++      |Account | Checking |
++      |Payee details | XYZ account |
++    Then message "The new payee The Law Offices of Hyde, Price & Scharks was successfully created." should be displayed
+\ No newline at end of file
+Index: src/test/resources/features/PurchaseForeignCurrency.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/resources/features/PurchaseForeignCurrency.feature	(date 1577228587794)
++++ src/test/resources/features/PurchaseForeignCurrency.feature	(date 1577228587794)
+@@ -0,0 +1,26 @@
++Feature: Purchase Foreign Currency
++Background: the user accesses the Purchase foreign currency cash tab
++  Given the user accesses the Purchase foreign currency cash tab
++
++  Scenario: Available currencies
++    Then following currencies should be available
++      |Australia (dollar) |
++      |Canada (dollar) |
++      |Switzerland (franc) |
++      |China (yuan) |
++      |Denmark (krone) |
++      |Eurozone (euro) |
++      |Great Britain (pound)|
++      |Japan (yen) |
++      |Mexico (peso) |
++      |Norway (krone) |
++      |New Zealand (dollar) |
++      |Singapore (dollar) |
++
++  Scenario: Error message for not selecting currency
++    When user tries to calculate cost without selecting a currency
++    Then error message should be displayed
++
++  Scenario: Error message for not entering value
++    When user tries to calculate cost without entering a value
++    Then error message should be displayed
+\ No newline at end of file
+Index: src/test/resources/features/AccountActivityNavigation.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/resources/features/AccountActivityNavigation.feature	(date 1577307857219)
++++ src/test/resources/features/AccountActivityNavigation.feature	(date 1577307857219)
+@@ -0,0 +1,29 @@
++Feature: Navigating to specific accounts in Accounts Activity
++
++  Background: open login page and login as Account Manager
++    Given the user is logged in
++
++  Scenario: Savings account redirect
++    When the user clicks on Savings link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Savings" selected
++
++  Scenario: Brokerage account redirect
++    When the user clicks on Brokerage link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Brokerage" selected
++
++  Scenario: Checking account redirect
++    When the user clicks on Checking link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Checking" selected
++
++  Scenario: Credit Card account redirec
++    When the user clicks on Credit Card link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Credit Card" selected
++
++  Scenario: Loan account redirect
++    When the user clicks on Loan link on the Account Summary page
++    Then the "Account Activity" page should be displayed
++    And Account drop down should have "Loan" selected
+\ No newline at end of file
+Index: src/test/resources/features/FindTransactions.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/resources/features/FindTransactions.feature	(date 1577316742388)
++++ src/test/resources/features/FindTransactions.feature	(date 1577316742388)
+@@ -0,0 +1,42 @@
++Feature: Find Transactions in Account Activity
++  Background: the user is logged in
++
++    Given the user accesses the Find Transactions tab
++
++  Scenario: Search date range
++    When the user enters date range from "2012-09-01" to "2012-09-06"
++    And clicks search
++    Then results table should only show transactions dates between "2012-09-01" to
++    And the results should be sorted by most recent date
++    When the user enters date range from "2012-09-02" to "2012-09-06"
++    And clicks search
++    Then results table should only show transactions dates between "2012-09-02" to
++    And the results table should only not contain transactions dated "2012-09-01"
++
++  Scenario: Search description
++    When the user enters description "ONLINE"
++    And clicks search
++    Then results table should only show descriptions containing "ONLINE"
++    When the user enters description "ONLINE"
++    And clicks search
++    Then results table should only show descriptions containing “OFFICE”
++    But results table should not show descriptions containing "ONLINE"
++
++  Scenario: Search description case insensitive
++    When the user enters description "ONLINE"
++    And clicks search
++    Then results table should only show descriptions containing "ONLINE"
++    When the user enters description "online"
++    And clicks search
++    Then results table should only show descriptions containing "ONLINE"
++
++  Scenario: Type
++    And clicks search
++    Then results table should show at least one result under Deposit
++    Then results table should show at least one result under Withdrawal
++    When user selects type "Deposit"
++    Then results table should show at least one result under Deposit
++    But results table should show no result under Withdrawal
++    When user selects type "Withdrawal"
++    Then results table should show at least one result under Withdrawal
++    But results table should show no result under Deposit
+\ No newline at end of file
+Index: src/test/java/com/zerobank/stepdefnitions/AccountActivityNavigationDefinition.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/stepdefnitions/AccountActivityNavigationDefinition.java	(date 1577309152133)
++++ src/test/java/com/zerobank/stepdefnitions/AccountActivityNavigationDefinition.java	(date 1577309152133)
+@@ -0,0 +1,66 @@
++package com.zerobank.stepdefnitions;
++
++import com.zerobank.pages.AccountActivityNavigation;
++import com.zerobank.pages.LoginPage;
++import com.zerobank.utilities.ConfigurationReader;
++import com.zerobank.utilities.Driver;
++import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++import io.cucumber.java.en.When;
++import org.openqa.selenium.WebDriver;
++
++public class AccountActivityNavigationDefinition {
++    WebDriver driver;
++    LoginPage loginPage = new LoginPage();
++    AccountActivityNavigation activity = new AccountActivityNavigation();
++
++    @Given("the user is logged in")
++    public void the_user_is_logged_in() {
++
++        Driver.get().get(ConfigurationReader.getProperty("url"));
++        String userName = ConfigurationReader.getProperty("username");
++        String password = ConfigurationReader.getProperty("password");
++        loginPage.login(userName, password);
++
++    }
++
++    @When("the user clicks on Savings link on the Account Summary page")
++    public void the_user_clicks_on_Savings_link_on_the_Account_Summary_page() {
++        activity.activityNavigation("savings");
++
++    }
++
++    @Then("the {string} page should be displayed")
++    public void the_page_should_be_displayed(String expected) {
++        activity.isPageTitleDisplayed(expected);
++
++    }
++
++    @Then("Account drop down should have {string} selected")
++    public void account_drop_down_should_have_selected(String dP) {
++        activity.dropDown(dP);
++    }
++
++    @When("the user clicks on Brokerage link on the Account Summary page")
++    public void the_user_clicks_on_Brokerage_link_on_the_Account_Summary_page() {
++        activity.activityNavigation("brokerage");
++    }
++
++    @When("the user clicks on Checking link on the Account Summary page")
++    public void the_user_clicks_on_Checking_link_on_the_Account_Summary_page() {
++        activity.activityNavigation("checking");
++    }
++
++    @When("the user clicks on Credit Card link on the Account Summary page")
++    public void the_user_clicks_on_Credit_Card_link_on_the_Account_Summary_page() {
++        activity.activityNavigation("creditCard");
++    }
++
++    @When("the user clicks on Loan link on the Account Summary page")
++    public void the_user_clicks_on_Loan_link_on_the_Account_Summary_page() {
++        activity.activityNavigation("loan");
++    }
++
++}
++
++
+Index: src/test/java/com/zerobank/stepdefnitions/Hook.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/stepdefnitions/Hook.java	(date 1577226471293)
++++ src/test/java/com/zerobank/stepdefnitions/Hook.java	(date 1577226471293)
+@@ -0,0 +1,34 @@
++package com.zerobank.stepdefnitions;
++
++import com.zerobank.utilities.Driver;
++import io.cucumber.core.api.Scenario;
++import io.cucumber.java.After;
++import io.cucumber.java.Before;
++import org.openqa.selenium.OutputType;
++import org.openqa.selenium.TakesScreenshot;
++
++public class Hook {
++
++    @Before
++    public void setup(){
++        System.out.println("##############################");
++        System.out.println("Test setup!");
++        Driver.get().manage().window().maximize();
++    }
++
++    @After
++    public void teardown(Scenario scenario){
++        //if test failed - do this
++        if(scenario.isFailed()){
++            System.out.println("Test failed!");
++            byte[] screenshot = ((TakesScreenshot)Driver.get()).getScreenshotAs(OutputType.BYTES);
++            scenario.embed(screenshot, "image/png");
++        }else{
++            System.out.println("Cleanup!");
++            System.out.println("Test completed!");
++        }
++        System.out.println("##############################");
++        //after every test, we gonna close browser
++        Driver.close();
++    }
++}
+Index: target/test-classes/features/FindTransactions.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/test-classes/features/FindTransactions.feature	(date 1577316742855)
++++ target/test-classes/features/FindTransactions.feature	(date 1577316742855)
+@@ -0,0 +1,42 @@
++Feature: Find Transactions in Account Activity
++  Background: the user is logged in
++
++    Given the user accesses the Find Transactions tab
++
++  Scenario: Search date range
++    When the user enters date range from "2012-09-01" to "2012-09-06"
++    And clicks search
++    Then results table should only show transactions dates between "2012-09-01" to
++    And the results should be sorted by most recent date
++    When the user enters date range from "2012-09-02" to "2012-09-06"
++    And clicks search
++    Then results table should only show transactions dates between "2012-09-02" to
++    And the results table should only not contain transactions dated "2012-09-01"
++
++  Scenario: Search description
++    When the user enters description "ONLINE"
++    And clicks search
++    Then results table should only show descriptions containing "ONLINE"
++    When the user enters description "ONLINE"
++    And clicks search
++    Then results table should only show descriptions containing “OFFICE”
++    But results table should not show descriptions containing "ONLINE"
++
++  Scenario: Search description case insensitive
++    When the user enters description "ONLINE"
++    And clicks search
++    Then results table should only show descriptions containing "ONLINE"
++    When the user enters description "online"
++    And clicks search
++    Then results table should only show descriptions containing "ONLINE"
++
++  Scenario: Type
++    And clicks search
++    Then results table should show at least one result under Deposit
++    Then results table should show at least one result under Withdrawal
++    When user selects type "Deposit"
++    Then results table should show at least one result under Deposit
++    But results table should show no result under Withdrawal
++    When user selects type "Withdrawal"
++    Then results table should show at least one result under Withdrawal
++    But results table should show no result under Deposit
+\ No newline at end of file
+Index: src/test/java/com/zerobank/stepdefnitions/PurchaseForeignCurrencyDefinition.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/stepdefnitions/PurchaseForeignCurrencyDefinition.java	(date 1577228270617)
++++ src/test/java/com/zerobank/stepdefnitions/PurchaseForeignCurrencyDefinition.java	(date 1577228270617)
+@@ -0,0 +1,33 @@
++package com.zerobank.stepdefnitions;
++
++import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++import io.cucumber.java.en.When;
++
++public class PurchaseForeignCurrencyDefinition {
++    @Given("the user accesses the Purchase foreign currency cash tab")
++    public void the_user_accesses_the_Purchase_foreign_currency_cash_tab() {
++
++    }
++
++    @Then("following currencies should be available")
++    public void following_currencies_should_be_available(io.cucumber.datatable.DataTable dataTable) {
++
++    }
++
++    @When("user tries to calculate cost without selecting a currency")
++    public void user_tries_to_calculate_cost_without_selecting_a_currency() {
++
++    }
++
++    @Then("error message should be displayed")
++    public void error_message_should_be_displayed() {
++
++    }
++
++    @When("user tries to calculate cost without entering a value")
++    public void user_tries_to_calculate_cost_without_entering_a_value() {
++
++    }
++
++}
+Index: src/test/java/com/zerobank/stepdefnitions/AddNewPayeeDefinition.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/stepdefnitions/AddNewPayeeDefinition.java	(date 1577227760601)
++++ src/test/java/com/zerobank/stepdefnitions/AddNewPayeeDefinition.java	(date 1577227760601)
+@@ -0,0 +1,27 @@
++package com.zerobank.stepdefnitions;
++
++import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++
++public class AddNewPayeeDefinition {
++    @Given("Add New Payee tab")
++    public void add_New_Payee_tab() {
++
++    }
++
++    @Given("creates new payee using following information")
++    public void creates_new_payee_using_following_information(io.cucumber.datatable.DataTable dataTable) {
++
++    }
++
++    @Then("message The new payee The Law Offices of Hyde, Price & Scharks was successfully created. should be displayed")
++    public void message_The_new_payee_The_Law_Offices_of_Hyde_Price_Scharks_was_successfully_created_should_be_displayed() {
++
++    }
++
++    @Then("message {string} should be displayed")
++    public void message_should_be_displayed(String string) {
++
++
++    }
++}
+\ No newline at end of file
+Index: src/test/java/com/zerobank/stepdefnitions/FindTransactionsDefinition.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/stepdefnitions/FindTransactionsDefinition.java	(date 1577317648814)
++++ src/test/java/com/zerobank/stepdefnitions/FindTransactionsDefinition.java	(date 1577317648814)
+@@ -0,0 +1,79 @@
++package com.zerobank.stepdefnitions;
++
++import io.cucumber.java.en.Given;
++import io.cucumber.java.en.Then;
++import io.cucumber.java.en.When;
++
++public class FindTransactionsDefinition {
++
++    @Given("the user accesses the Find Transactions tab")
++    public void the_user_accesses_the_Find_Transactions_tab() {
++
++    }
++    @When("the user enters date range from {string} to {string}")
++    public void the_user_enters_date_range_from_to(String string, String string2) {
++
++    }
++    @When("clicks search")
++    public void clicks_search() {
++        // Write code here that turns the phrase above into concrete actions
++        throw new cucumber.api.PendingException();
++    }
++
++    @Then("results table should only show transactions dates between {string} to")
++    public void results_table_should_only_show_transactions_dates_between_to(String string) {
++
++    }
++
++    @Then("the results should be sorted by most recent date")
++    public void the_results_should_be_sorted_by_most_recent_date() {
++
++    }
++
++    @Then("the results table should only not contain transactions dated {string}")
++    public void the_results_table_should_only_not_contain_transactions_dated(String string) {
++
++    }
++
++    @When("the user enters description {string}")
++    public void the_user_enters_description(String string) {
++
++    }
++
++    @Then("results table should only show descriptions containing {string}")
++    public void results_table_should_only_show_descriptions_containing(String string) {
++
++    }
++
++    @Then("results table should only show descriptions containing “OFFICE”")
++    public void results_table_should_only_show_descriptions_containing_OFFICE() {
++
++    }
++    @Then("results table should not show descriptions containing {string}")
++    public void results_table_should_not_show_descriptions_containing(String string) {
++
++    }
++
++    @Then("results table should show at least one result under Deposit")
++    public void results_table_should_show_at_least_one_result_under_Deposit() {
++
++    }
++    @Then("results table should show at least one result under Withdrawal")
++    public void results_table_should_show_at_least_one_result_under_Withdrawal() {
++
++    }
++    @When("user selects type {string}")
++    public void user_selects_type(String string) {
++
++    }
++    @Then("results table should show no result under Withdrawal")
++    public void results_table_should_show_no_result_under_Withdrawal() {
++
++    }
++
++    @Then("results table should show no result under Deposit")
++    public void results_table_should_show_no_result_under_Deposit() {
++
++    }
++
++}
+Index: src/test/java/com/zerobank/pages/AccountActivityNavigation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/pages/AccountActivityNavigation.java	(date 1577309431469)
++++ src/test/java/com/zerobank/pages/AccountActivityNavigation.java	(date 1577309431469)
+@@ -0,0 +1,67 @@
++package com.zerobank.pages;
++
++
++import com.zerobank.utilities.BrowserUtils;
++import org.junit.Assert;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.FindBy;
++import org.openqa.selenium.support.ui.Select;
++
++import java.util.List;
++
++public class AccountActivityNavigation extends BasePage {
++
++    @FindBy(xpath = "//div[@class='offset2 span8']//div[1]//div[1]//table[1]//tbody[1]//tr[1]//td[1]//a[1]")
++    public WebElement savings;
++
++    @FindBy(xpath = "//a[contains(text(),'Account Activity')]")
++    public WebElement activityTitle;
++
++    @FindBy(xpath = "//a[contains(text(),'Checking')]")
++    public WebElement checking;
++
++    @FindBy(xpath = "//a[contains(text(),'Loan')]")
++    public WebElement loan;
++
++    @FindBy(xpath = "//a[contains(text(),'Credit Card')]")
++    public WebElement creditCard;
++
++    @FindBy(xpath = "//a[contains(text(),'Brokerage')]")
++    public WebElement brokerage;
++
++    @FindBy(xpath = "//select[@id='aa_accountId']")
++    public WebElement dropDown;
++
++    public void activityNavigation(String activity) {
++        if (activity.equals("savings")) {
++            savings.click();
++        } else if (activity.equals("brokerage")) {
++            brokerage.click();
++        } else if (activity.equals("creditCard")) {
++            creditCard.click();
++        } else if (activity.equals("dropDown")) {
++            dropDown.click();
++        } else if (activity.equals("checking")) {
++            checking.click();
++        }
++    }
++
++    public void isPageTitleDisplayed(String expected) {
++        //Retreiving the page title and comparing it.
++        String result = activityTitle.getText();
++        Assert.assertEquals(expected, result);
++    }
++
++    public void dropDown(String dP) {
++        dropDown.click();
++        Select select = new Select(dropDown);
++        WebElement option = select.getFirstSelectedOption();
++        String defaultItem = option.getText();
++        //Verify that expected and actual is same
++        Assert.assertEquals(dP,defaultItem);
++        System.out.println("This is default item" + dP + " from" + defaultItem);
++        BrowserUtils.wait(1);
++    }
++
++
++}
+Index: src/test/java/com/zerobank/pages/AddNewPayee.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/pages/AddNewPayee.java	(date 1577238063782)
++++ src/test/java/com/zerobank/pages/AddNewPayee.java	(date 1577238063782)
+@@ -0,0 +1,246 @@
++package com.zerobank.pages;
++
++
++import com.zerobank.utilities.BrowserUtils;
++import com.zerobank.utilities.Driver;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriverException;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.FindBy;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.Select;
++import org.openqa.selenium.support.ui.WebDriverWait;
++
++import java.time.LocalDate;
++import java.time.LocalDateTime;
++import java.time.LocalTime;
++import java.time.format.DateTimeFormatter;
++import java.time.temporal.ChronoUnit;
++import java.util.List;
++
++public class AddNewPayee extends BasePage {
++
++    @FindBy(css = "[class='select2-chosen']")
++    public WebElement owner;
++
++    @FindBy(css = "[title='Create Calendar event']")
++    public WebElement createCalendarEventBtn;
++
++    @FindBy(css = "a[title='Grid Settings']")
++    public WebElement gridSettingsElement;
++
++    @FindBy(css = "a[title='Reset']")
++    public WebElement resetBtnElement;
++
++    @FindBy(css = ".grid-header-cell__label")
++    public List<WebElement> headers;
++
++    @FindBy(css = "[id^='date_selector_oro_calendar_event_form_start']")
++    public WebElement startDate;
++    @FindBy(css = "[id^='date_selector_oro_calendar_event_form_end']")
++    public WebElement endDate;
++
++    @FindBy(css = "[id^='time_selector_oro_calendar_event_form_start']")
++    public WebElement startTime;
++
++    @FindBy(css = "[id^='time_selector_oro_calendar_event_form_end']")
++    public WebElement endTime;
++
++    @FindBy(css = "select[class='ui-timepicker-wrapper']")
++    public WebElement timeDropdown;
++
++    @FindBy(css = "select[class='ui-datepicker-month']")
++    public WebElement monthDropdown;
++
++    @FindBy(css = "select[class='ui-datepicker-year']")
++    public WebElement yearDropdown;
++
++    @FindBy(css = "[id^='recurrence-repeat-view']")
++    public WebElement repeatCheckbox;
++
++
++    public void selectGridSetting(String name, boolean yesOrNo) {
++        //click on grid options
++        waitUntilLoaderMaskDisappear();
++        BrowserUtils.clickWithWait(gridSettingsElement);
++        //create locator for grid option based on the name
++        String locator = "//td//label[text()='" + name + "']/../following-sibling::td//input";
++        //find element
++        //you can also call Driver.get()
++        WebElement gridOption = Driver.get().findElement(By.xpath(locator));
++        //if param yesOrNo is true, and checkbox is not selected yet
++        //click on it
++        //or
++        //ckeckbox is selected and you want to unselect it
++        if ((yesOrNo && !gridOption.isSelected()) || (
++                !yesOrNo && gridOption.isSelected())) {
++            gridOption.click();
++        }
++    }
++
++    public boolean verifyHeaderExists(String headerNameOrColumnName) {
++        for (WebElement tableHeader : headers) {
++            if (tableHeader.getText().equalsIgnoreCase(headerNameOrColumnName)) {
++                return true;
++            }
++        }
++        return false;
++    }
++
++    /**
++     * Simple method that can select start or end date on create calendar event page
++     *
++     * @param date       format MM/dd/yyy for example 12/12/2019
++     * @param startOrEnd which date to click on start or end
++     */
++    public void selectStartOrEndDate(String date, String startOrEnd) {
++        waitUntilLoaderMaskDisappear();
++        LocalDate ld = LocalDate.of(Integer.parseInt(date.substring(date.lastIndexOf("/") + 1)),
++                Integer.parseInt(date.substring(0, date.indexOf("/"))),
++                Integer.parseInt(date.substring(date.indexOf("/") + 1, date.lastIndexOf("/"))));
++
++        String month = DateTimeFormatter.ofPattern("MMM").format(ld);
++        int year = ld.getYear();
++        int day = ld.getDayOfMonth();
++
++
++        //locator for day
++        String dayLocator = "//a[@class='ui-state-default' and text()='" + day + "']";
++
++        //click on start or end date
++        if (startOrEnd.equalsIgnoreCase("start")) {
++            BrowserUtils.waitForVisibility(startDate, 5);
++            startDate.click();
++        } else {
++            BrowserUtils.waitForVisibility(endDate, 5);
++            endDate.click();
++        }
++
++        //select month
++        new Select(monthDropdown).selectByVisibleText(month);
++
++
++        //select year
++        new Select(yearDropdown).selectByVisibleText(year + "");
++
++        //select day
++        Driver.get().findElement(By.xpath(dayLocator)).click();
++    }
++
++    public void selectTomorrowDay() {
++        int day = LocalDate.now().plusDays(1).getDayOfMonth();
++        int month = LocalDate.now().plusDays(1).getMonth().getValue();
++        try {
++            waitUntilLoaderMaskDisappear();
++            startDate.click();
++        } catch (WebDriverException e) {
++            System.out.println(e.getMessage());
++            BrowserUtils.clickWithWait(startDate);
++        }
++        Select monthSelect = new Select(monthDropdown);
++        monthSelect.selectByIndex(month - 1);
++        String dayLocator = "//table[@class='ui-datepicker-calendar']//a[text()='" + day + "']";
++        Driver.get().findElement(By.xpath(dayLocator)).click();
++    }
++
++
++    public void selectADay(int plusDays) {
++        int day = LocalDate.now().plusDays(plusDays).getDayOfMonth();
++        int month = LocalDate.now().plusDays(plusDays).getMonth().getValue();
++        waitUntilLoaderMaskDisappear();
++        startDate.click();
++        Select monthSelect = new Select(monthDropdown);
++        monthSelect.selectByIndex(month - 1);
++        String dayLocator = "//table[@class='ui-datepicker-calendar']//a[text()='" + day + "']";
++        Driver.get().findElement(By.xpath(dayLocator)).click();
++    }
++
++    public void selectTodayDate() {
++        int day = LocalDate.now().getDayOfMonth();
++        startDate.click();
++        String dayLocator = "//table[@class='ui-datepicker-calendar']//a[text()='" + day + "']";
++        try {
++            Driver.get().findElement(By.xpath(dayLocator)).click();
++        } catch (Exception e) {
++            BrowserUtils.wait(1);
++            Driver.get().findElement(By.xpath(dayLocator)).click();
++        }
++    }
++
++    public void selectStartTime(int plusHours) {
++        String time = LocalDateTime.now().plusHours(plusHours).format(DateTimeFormatter.ofPattern("h:00 a"));
++        waitUntilLoaderMaskDisappear();
++        String startTimeToSelect = "(//li[text()='" + time + "'])[1]";
++        startTime.click();
++        new WebDriverWait(Driver.get(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath(startTimeToSelect)));
++        Driver.get().findElement(By.xpath(startTimeToSelect)).click();
++    }
++
++    public void selectStartTime(String time) {
++        waitUntilLoaderMaskDisappear();
++        String startTimeToSelect = "(//li[text()='" + time + "'])[1]";
++        try {
++            startTime.click();
++        } catch (WebDriverException e) {
++            System.out.println(e.getMessage());
++            BrowserUtils.clickWithWait(startTime);
++        }
++        new WebDriverWait(Driver.get(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath(startTimeToSelect)));
++        Driver.get().findElement(By.xpath(startTimeToSelect)).click();
++    }
++
++    public void selectEndTime(String time) {
++        waitUntilLoaderMaskDisappear();
++        String endTimeToSelect = "(//li[text()='" + time + "'])[2]";
++        startTime.click();
++        Driver.get().findElement(By.xpath(endTimeToSelect)).click();
++    }
++
++    public long differenceBetweenStartTimeAndEndTime() {
++        LocalTime actualStartTime = LocalTime.parse(startTime.getAttribute("value"), DateTimeFormatter.ofPattern("h:mm a"));
++        try {
++            new WebDriverWait(Driver.get(), 3).until(ExpectedConditions.invisibilityOf(startTime));
++        } catch (Exception e) {
++            System.out.println(e);
++        }
++        LocalTime actualEndTime = LocalTime.parse(endTime.getAttribute("value"), DateTimeFormatter.ofPattern("h:mm a"));
++        return ChronoUnit.HOURS.between(actualStartTime, actualEndTime);
++    }
++
++    public void clickOnCreateCalendarEvent() {
++        waitUntilLoaderMaskDisappear();
++        BrowserUtils.waitForStaleElement(createCalendarEventBtn);
++        BrowserUtils.waitForClickablility(createCalendarEventBtn, 10);
++        createCalendarEventBtn.click();
++    }
++
++    public void selectTodaysDate() {
++        int day = LocalDate.now().getDayOfMonth();
++        startDate.click();
++        String dayLocator = "//table[@class='ui-datepicker-calendar']//a[text()='" + day + "']";
++        try {
++            Driver.get().findElement(By.xpath(dayLocator)).click();
++        } catch (Exception e) {
++            BrowserUtils.wait(1);
++            Driver.get().findElement(By.xpath(dayLocator)).click();
++        }
++    }
++
++    public String getStartDate() {
++        return startDate.getAttribute("value");
++    }
++
++    public String getEndDate() {
++        return endDate.getAttribute("value");
++    }
++
++    public String getStartTime() {
++        return startTime.getAttribute("value");
++    }
++
++    public String getEndTime() {
++        return endTime.getAttribute("value");
++    }
++
++
++}
+Index: src/test/java/com/zerobank/pages/LoginPage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/pages/LoginPage.java	(date 1577230810277)
++++ src/test/java/com/zerobank/pages/LoginPage.java	(date 1577230810277)
+@@ -0,0 +1,48 @@
++package com.zerobank.pages;
++
++
++import com.zerobank.utilities.Driver;
++import org.openqa.selenium.Keys;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.FindBy;
++import org.openqa.selenium.support.PageFactory;
++
++//according to page object model design
++//we have to create corresponded page class
++//for each page of application
++//login page = login page class
++//every page class will store webelements and methods related to that page
++public class LoginPage extends BasePage{
++
++    @FindBy(xpath = "//input[@id='user_login']") //this line will initialize web element
++    public WebElement userNameInput;
++
++    @FindBy(xpath = "//input[@id='user_password']")//without findby, web element will be null
++    public WebElement passwordInput;
++
++    @FindBy(xpath = "//input[@name='submit']")
++    public WebElement loginButton;
++
++
++
++    public LoginPage() {
++        //it's mandatory if you want to use @FindBy annotation
++        //this means LoginPage class
++        //Driver.get() return webdriver object
++        PageFactory.initElements(Driver.get(), this);
++    }
++
++    /**
++     * reusable login method
++     * just call this method to login
++     * provide username and password as parameters
++     * @param userName
++     * @param password
++     */
++    public void login(String userName, String password){
++        userNameInput.sendKeys(userName);
++        //Keys.ENTER to replace login click
++        passwordInput.sendKeys(password, Keys.ENTER);
++    }
++
++}
+Index: src/test/java/com/zerobank/pages/PurchaseForeignCurrency.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/pages/PurchaseForeignCurrency.java	(date 1577238063777)
++++ src/test/java/com/zerobank/pages/PurchaseForeignCurrency.java	(date 1577238063777)
+@@ -0,0 +1,22 @@
++package com.zerobank.pages;
++
++
++import com.zerobank.utilities.BrowserUtils;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.FindBy;
++
++public class PurchaseForeignCurrency extends BasePage{
++
++    @FindBy(css = "[title='Create Car']")
++    public WebElement createACarElement;
++
++    /**
++     * Use this method to click on "Create a Car" button
++     * Method already contains waits to handle synchronization issues
++     */
++    public void clickToCreateACar(){
++        BrowserUtils.waitForVisibility(createACarElement, 15);
++        BrowserUtils.waitForClickablility(createACarElement, 15);
++        createACarElement.click();
++    }
++}
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/uiDesigner.xml	(date 1577234710333)
++++ .idea/uiDesigner.xml	(date 1577234710333)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/test/java/com/zerobank/pages/FindTransactions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/pages/FindTransactions.java	(date 1577238063772)
++++ src/test/java/com/zerobank/pages/FindTransactions.java	(date 1577238063772)
+@@ -0,0 +1,91 @@
++package com.zerobank.pages;
++
++
++import com.zerobank.utilities.BrowserUtils;
++import com.zerobank.utilities.Driver;
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.support.FindBy;
++
++public class FindTransactions extends BasePage {
++
++    @FindBy(css = "[id^='custom_entity_type_LicensePlate']")
++    public WebElement licensePlateElement;
++
++    @FindBy(name = "custom_entity_type[Driver]")
++    public WebElement driverElement;
++
++    @FindBy(name = "custom_entity_type[Location]")
++    public WebElement locationElement;
++
++    @FindBy(css = "[class='btn btn-success action-button']")
++    public WebElement saveAndCloseButtonElement;
++
++    @FindBy(css = "div[id*='FuelType']")
++    public WebElement fuelTypeElement;
++
++    //if this locator doesn't work, use [id^='uniform-custom_entity_type_Logo_file'] > span[class='action']
++    @FindBy(name = "custom_entity_type[Logo][file]")
++    public WebElement logoElement;
++
++    @FindBy(name = "custom_entity_type[ModelYear]")
++    public WebElement modelYearElement;
++
++    @FindBy(name = "custom_entity_type[Color]")
++    public WebElement colorElement;
++
++
++    /**
++     * This method stands for selecting tags
++     * Provide tag name to select
++     * If checkbox already selected, it will not do anything
++     *
++     * @param tagName - represents name of tag that has to be selected, like Junior, Senior or Purchased
++     * @return webelement of checkbox that was selected
++     * <p>
++     * CreateCarPage createCarPage = new CreateCarPage();
++     * <p>
++     * createCarPage.selectTags("Senior"); // Senior tag will be selected
++     */
++    public WebElement selectTags(String tagName) {
++        //locator for checkbox is based on label name
++        //label and checkbox are siblings
++        String locator = "//label[text()='" + tagName + "']/preceding-sibling::input[@type='checkbox']";
++        WebElement checkBox = Driver.get().findElement(By.xpath(locator));
++        BrowserUtils.waitForVisibility(checkBox, 15);
++        BrowserUtils.waitForClickablility(checkBox, 15);
++        if (!checkBox.isSelected()) {
++            checkBox.click();
++        }
++        return checkBox;
++    }
++
++    /**
++     * Select fuel type by visible text
++     *
++     * @param fuelType - Diesel, Electric, Hybrid
++     *  <p>
++     *  usage: CreateCarPage createCarPage = new CreateCarPage();
++     *  <p>
++     *  to select gasoline type
++     *  createCarPage.selectFuelType("Diesel"); - if you want to select Diesel as fuel type
++     */
++    public void selectFuelType(String fuelType) {
++        String locator = "//div[@class='select2-result-label' and text()='" + fuelType + "']";
++        BrowserUtils.waitForClickablility(fuelTypeElement, 15);
++        fuelTypeElement.click();
++        WebElement fuelTypeSelectionElement = Driver.get().findElement(By.xpath(locator));
++        BrowserUtils.waitForClickablility(fuelTypeSelectionElement, 15);
++        fuelTypeSelectionElement.click();
++    }
++
++    /**
++     * This method will upload a file
++     * File from your computer!
++     * @param pathToTheFile that you want to upload
++     */
++    public void uploadLogo(String pathToTheFile){
++        BrowserUtils.waitForVisibility(logoElement, 15);
++        logoElement.sendKeys(pathToTheFile);
++    }
++}
+Index: src/test/java/com/zerobank/pages/BasePage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/zerobank/pages/BasePage.java	(date 1577231364432)
++++ src/test/java/com/zerobank/pages/BasePage.java	(date 1577231364432)
+@@ -0,0 +1,141 @@
++package com.zerobank.pages;
++
++
++import com.zerobank.utilities.BrowserUtils;
++import com.zerobank.utilities.Driver;
++import org.openqa.selenium.By;
++import org.openqa.selenium.NoSuchElementException;
++import org.openqa.selenium.WebDriverException;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.interactions.Actions;
++import org.openqa.selenium.support.FindBy;
++import org.openqa.selenium.support.PageFactory;
++import org.openqa.selenium.support.ui.ExpectedConditions;
++import org.openqa.selenium.support.ui.WebDriverWait;
++
++
++//everything that is in common among pages
++//can go here
++//for example top menu elements don't belong to specific page
++//top menu appears on every single page
++//so we can keep them here
++public class BasePage {
++
++    @FindBy(css = "div[class='loader-mask shown']")
++    public WebElement loaderMask;
++
++    @FindBy(css = "h1[class='oro-subtitle']")
++    public WebElement pageSubTitle;
++
++    @FindBy(css = "#user-menu > a")
++    public WebElement userName;
++
++    @FindBy(linkText = "Logout")
++    public WebElement logOutLink;
++
++    @FindBy(linkText = "My User")
++    public WebElement myUser;
++
++    public BasePage() {
++        //this method requires to provide webdriver object for @FindBy
++        //and page class
++        //this means this page class
++        PageFactory.initElements(Driver.get(), this);
++    }
++
++    /**
++     * While this loading screen present, html code is a not complete
++     * Some elements can be missing
++     * Also, you won't be able to interact with any elements
++     * All actions will be intercepted
++     * Waits until loader mask (loading bar, spinning wheel) disappears
++     *
++     * @return true if loader mask is gone, false if something went wrong
++     */
++    public boolean waitUntilLoaderMaskDisappear() {
++        WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
++        try {
++            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div[class='loader-mask shown']")));
++            return true;
++        } catch (NoSuchElementException e) {
++            System.out.println("Loader mask not found!");
++            e.printStackTrace();
++            return true; // no loader mask, all good, return true
++        } catch (WebDriverException e) {
++            e.printStackTrace();
++        }
++        return false;
++    }
++
++    /**
++     * This method stands for navigation in vytrack app
++     * provide tab name, for example "Fleet" as a String
++     * and module name, for example "Vehicles" as a String as well
++     * then based on these values, locators will be created
++     *
++     * @param moduleName
++     * @param subModuleName normalize-space() same line .trim() in java
++     */
++    public void navigateTo(String moduleName, String subModuleName) {
++        Actions actions = new Actions(Driver.get());
++        String moduleLocator = "//*[normalize-space()='" + moduleName + "' and @class='title title-level-1']";
++        String subModuleLocator = "//*[normalize-space()='" + subModuleName + "' and @class='title title-level-2']";
++
++        WebDriverWait wait = new WebDriverWait(Driver.get(), 20);
++        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(moduleLocator)));
++
++        WebElement module = Driver.get().findElement(By.xpath(moduleLocator));
++        wait.until(ExpectedConditions.visibilityOf(module));
++        wait.until(ExpectedConditions.elementToBeClickable(module));
++
++        waitUntilLoaderMaskDisappear();
++
++        BrowserUtils.clickWithWait(module); //if click is not working well
++        WebElement subModule = Driver.get().findElement(By.xpath(subModuleLocator));
++        if (!subModule.isDisplayed()) {
++            actions.doubleClick(module).doubleClick().build().perform();
++            try {
++                wait.until(ExpectedConditions.visibilityOf(subModule));
++            } catch (Exception ex) {
++                ex.printStackTrace();
++                BrowserUtils.clickWithJS(module);
++            }
++        }
++        BrowserUtils.clickWithWait(subModule); //if click is not working well
++        //it waits until page is loaded and ajax calls are done
++        BrowserUtils.waitForPageToLoad(10);
++    }
++
++    /**
++     * @return page name, for example: Dashboard
++     */
++    public String getPageSubTitle() {
++        //ant time we are verifying page name, or page subtitle, loader mask appears
++        waitUntilLoaderMaskDisappear();
++        BrowserUtils.waitForStaleElement(pageSubTitle);
++        return pageSubTitle.getText();
++    }
++
++    public String getUserName() {
++        waitUntilLoaderMaskDisappear();
++        BrowserUtils.waitForVisibility(userName, 5);
++        return userName.getText();
++    }
++
++    public void logOut() {
++        BrowserUtils.wait(2);
++        BrowserUtils.clickWithJS(userName);
++        BrowserUtils.clickWithJS(logOutLink);
++    }
++
++    public void goToMyUser() {
++        waitUntilLoaderMaskDisappear();
++        BrowserUtils.waitForClickablility(userName, 5).click();
++        BrowserUtils.waitForClickablility(myUser, 5).click();
++    }
++
++    public void waitForPageSubTitle(String pageSubtitleText) {
++        new WebDriverWait(Driver.get(), 10).until(ExpectedConditions.textToBe(By.cssSelector("h1[class='oro-subtitle']"), pageSubtitleText));
++    }
++
++}
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(date 1577224554965)
++++ pom.xml	(date 1577224554965)
+@@ -0,0 +1,98 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++
++    <groupId>com.zerobank</groupId>
++    <artifactId>zerobank-automation</artifactId>
++    <version>1.0-SNAPSHOT</version>
++
++    <properties>
++        <maven.compiler.source>1.8</maven.compiler.source>
++        <maven.compiler.target>1.8</maven.compiler.target>
++    </properties>
++
++    <dependencies>
++        <dependency>
++            <groupId>io.github.bonigarcia</groupId>
++            <artifactId>webdrivermanager</artifactId>
++            <version>3.7.1</version>
++        </dependency>
++
++        <dependency>
++            <groupId>org.seleniumhq.selenium</groupId>
++            <artifactId>selenium-java</artifactId>
++            <version>3.141.59</version>
++        </dependency>
++
++        <dependency>
++            <groupId>org.apache.poi</groupId>
++            <artifactId>poi-ooxml</artifactId>
++            <version>4.0.1</version>
++        </dependency>
++
++        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
++        <dependency>
++            <groupId>io.cucumber</groupId>
++            <artifactId>cucumber-java</artifactId>
++            <version>4.7.4</version>
++        </dependency>
++
++
++        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
++        <dependency>
++            <groupId>io.cucumber</groupId>
++            <artifactId>cucumber-junit</artifactId>
++            <version>4.7.4</version>
++        </dependency>
++
++        <dependency>
++            <groupId>org.slf4j</groupId>
++            <artifactId>slf4j-simple</artifactId>
++            <version>1.7.21</version>
++        </dependency>
++
++    </dependencies>
++
++    <build>
++        <plugins>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-surefire-plugin</artifactId>
++                <version>3.0.0-M3</version>
++                <configuration>
++                    <includes>
++                        <include>**/CucumberRunner.java</include>
++                    </includes>
++                    <testFailureIgnore>true</testFailureIgnore>
++                </configuration>
++            </plugin>
++            <plugin>
++                <groupId>net.masterthought</groupId>
++                <artifactId>maven-cucumber-reporting</artifactId>
++                <version>4.9.0</version>
++                <executions>
++                    <execution>
++                        <id>execution</id>
++                        <phase>verify</phase>
++                        <goals>
++                            <goal>generate</goal>
++                        </goals>
++                        <configuration>
++                            <projectName>Cucumber HTML Reports</projectName>
++                            <outputDirectory>${project.build.directory}</outputDirectory>
++                            <inputDirectory>${project.build.directory}</inputDirectory>
++                            <jsonFiles>
++                                <param>**/cucumber*.json</param>
++                            </jsonFiles>
++                        </configuration>
++                    </execution>
++                </executions>
++            </plugin>
++        </plugins>
++    </build>
++
++
++
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1577768122140)
++++ .idea/compiler.xml	(date 1577768122140)
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <annotationProcessing>
++      <profile default="true" name="Default" enabled="true" />
++      <profile name="Maven default annotation processors profile" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <module name="zerobank-automation" />
++      </profile>
++    </annotationProcessing>
++    <bytecodeTargetLevel target="11" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(date 1577222909774)
++++ .idea/misc.xml	(date 1577222909774)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" project-jdk-name="12.0.1" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: zerobank-automation.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- zerobank-automation.iml	(date 1577222923433)
++++ zerobank-automation.iml	(date 1577222923433)
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4" />
+\ No newline at end of file
+Index: configuration.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- configuration.properties	(date 1577229928111)
++++ configuration.properties	(date 1577229928111)
+@@ -0,0 +1,10 @@
++#BROWSER TYPE | it's a comment
++#key=value, it's like a Map in java
++browser=chrome
++
++#URL OF OUR WEB APPLICATION
++url=http://zero.webappsecurity.com/login.html
++
++#CREDENTIALS
++username: username
++password: password
+\ No newline at end of file
+diff --git target/test-classes/com/zerobank/stepdefnitions/Hook.class target/test-classes/com/zerobank/stepdefnitions/Hook.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..e0e5cc341bfe33ea9489299147df56884eab1fe5
+GIT binary patch
+literal 1838
+zc$|$@YgZdp6x}xuCXZ=>AeO3FXs9ND9UmwvwH0XTE0o$qkmBoRa+BVY%#1UW*7l$H
+z3;f)EXvGh%e)dPX+%uU~in5@|TK9GKIeVWo=g$27&!2w*SVX6QH!+vTJU+<bd;u0d
+z%;BQ~KE@|SEa1~3KEq-WpW}-nzQj@v7Yuxr$3<K!!o=4GW^!1LOe;C8=5RUkykcO@
+zz*T{v3)<1)MS*msx+#!Zbz4ecxTYO-tKVxXzag7lo|I~?ExVi2*U>&X%!K!JAaJ&3
+zyFKf%^4+F%cC8>(UQ4wZR=ZAMU31;tC4p?9!oDYP`cB^obx&>TKr_g)<G7)Wk+jvc
+zYuSA}CbsU&2hv(mZP!=y&xK0*E%%{AzRCfdO@JjmZPjh%P@uaMWl{)iUnwWJ=Y|5Q
+zofSq161%{eV*&`AsE5+tU6)>x>cs!0Ew@AE6I!Udecx7VI>P0nbk9e26Q?j?;F^i+
+zxFPUv`N*Gvn<i>l7brGV5KhI_nl^CD#0G8~_{PK?d~0CS#1^&<+%>Tih5z2f5BO2Q
+zjJ?{DB3jb|W!LXmuBV(|q!p;Ha&*6EHRP@e>MzS;;3pG5gF>6Isa*GDM_HcJG0_53
+z$*p#kbf|*;5J%@z_PQ!0fr&OI1g4IA?gArmsk+kXSR2jz$_@`4)gRHR$L4eUG>q3`
+z3k!YQ*G^aueI<J=@Yo^80)`juy6lJXO6`@9A&)z83rrr6*AI1<(o|qw_VokhleMGB
+zI$f#O4y)FdY7T%@FnJ_^x2Pu_7LTGfyrh@S>yD%R)vgQz#clOCmYKwpZ0BAJNY;ni
+z;f>&8D_K;IWf>qzGV?k(HbGDRs(bn|bDKQ!&Je1DwYdM{m&skW{9zOu{m|=&jYl3M
+zW>>ZwSL*DeLq+c+DR-F9YQJ@tnf*fLIIn8$zs(oDhZOZw;;G8c%HeI3wYzShFpY7(
+zccWh#BD%{QPjhE+7M!!Q&mo?0k-}RXhvLHm-sWfy0C)$JoLLAur()-A&XKMB6sc1B
+z88XqF<@^VR_FxF?Ar}pKf&I`WWH_Eg4#ODX|13sdp(!UcXA%)pG37K-1Ip*rpXPjX
+zZVv^4-%yP>iv!LVFrVVY9!{q40>kTb^QDnJjHdBB#v)WHQ8<>&>DcRyCvj0CX|v22
+zEK{BZ8fBJcQqI$2QQ#tlU1IK6Dd`3UMUtoJS0=iQ8Oo!mM0~V5hxaJ_eXcV|S;H?A
+ds>Fq;#^Wp+aY0i2<}IK;l;>w}0pAVf{{>`T#%llo
+
+diff --git target/test-classes/com/zerobank/pages/PurchaseForeignCurrency.class target/test-classes/com/zerobank/pages/PurchaseForeignCurrency.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..b1cc3822d02bb1863bdb4785374ee333e8fdf485
+GIT binary patch
+literal 875
+zc$|$>+iuf95IvhFaqAk=gcK+(Ati;h5yFo=aFJSzNJtT?Afyk7hmE^Rm)g5wy{3Y{
+zLPFy5zz6VAi188vNQENH<Js9WXU1oCzkd7t1;8D2eR#OMgeum2T)}!_HkNS}Ef3c`
+zv>EEL5!{O1h?|FrNQJTt?SVFvP)~(=#luV_LdiT055#zexXZBiBv)3ZVk9#;PQ<QK
+z+Hxzk${4mzP0#Y_R2v)ir8?YuLlg^fM&RaiD{Ug~cO%zFoBHU!V5r`cO4<j6+TIy4
+zlp}p87-|El#N#|23p3<YmZ34wF;7O^$YMPUmhF)w>RW?Yr{P;+^q8yTaLOkl3-@yq
+zAMs4|wGncnqTCpv;-a5=oXGfisH3?c4E|G1c+r;y?Z#hnZ@=WPd4Th%1z5zAhs^-j
+z(Fw4Hj)xloZlcD}`~PMb)=vTN5pbV8hRz?mxs{2uvOpMpk_q#S0`&X!6D}<=yAc%-
+z;*GY?8ttQ<vxncDF-L`9B>9ZI_3uQ6ic=VybR0c8o{S#Si>yzpW%?Fxkl`Fk<dB|Z
+zS7<AAP@vNL0QQcY66$2DF1UyW+298N7tnOftMlZcBLiB!_b9E@K4RhEr&o5~CsY`I
+Zu{Kb4)^}V@x+|-{RcOsCTyz<iz61D>-#7pO
+
+diff --git target/test-classes/com/zerobank/stepdefnitions/AccountActivityNavigationDefinition.class target/test-classes/com/zerobank/stepdefnitions/AccountActivityNavigationDefinition.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..6cf41f9a6ec52e0b3b11692832efa9e8e41b4e07
+GIT binary patch
+literal 3002
+zc$}q{4OiP_6vzK5FHK7~u)rMK*urod6eP-~V*<mjb@Qb#1O(?>Op}N98EMkxg^3<N
+zl;=1$^&CHdAIjr>l9akFrS;gJK5xCx?|<*jlbihY_wRoKxQ$vC=TS<doJ9(y4Bo^?
+zY243ZAeubL;$wUw<I^lYLuCl-*pTs1#;h>kl<~Q++!D>UXm(_LA!Ap@o{TTkc$CIh
+z5(Z6|A2L_Mm5SrmRHw=8C%Wn}i`hJAsC%qh4h@ziWGtt~?M=PLBwVf-PDA~XxlUEL
+z57Z_tdTOQhKN-uq;qyc8A4yn9vMm~h6WD$+w%X7Sc}@4ZW7FQj6>f9?u7tjs*<A_!
+zCC4Pm;R?6eM$o7-cSo;Uw34qlhHmZZE*JB7vEQ$APeSo!QO{>hlkF3hBu-H;vwa>J
+zkssrJooRu`T#b7g1z%&P#%+pCtZnFx(1pkPp{`oGT~oJxm)kWFdsFwkr;ck%nAjp2
+z-e9}j<K$k^wjDndA{Q@KxT6|@5r(9O9A>KzDBD7O;83>$7CE5^L4|ut<b)!eSUz#i
+zu()yHX^yRJQyg}UeC76mm<y9QRBbzGG<5e!YlheFLZbFwJ(ONPk&MuaV=FOQ5oj?N
+zCNWxx(Mp8ABvi#v^Xg7unOc=;Cij|_e#9sv<1??POk8D|{m^8FFHDl1+lidJCX|2j
+z!i_(Nl1ikbRGIQGo$GoWxam4g&2*mHEr06zA^AopJW@-Un-W?lLJ`)Aux?R>bz85!
+zZ8ahP_gv?IxgzxLS70?E$tU}JNb^d9eyPrk1M;&6`IQ9u*7hFM*OJs-W^!LE>8{y>
+z18YeRgakzpdhlT>!H0^Y+dYUcC5VfyJ*Z~4oxnBNeJ+a4Ob>-*K^)*5u0WxC<Fu-o
+z!$n+@F#lhwWe$_LoW|EVe1mVPU<R(0#&<br_&yC?tS-j&%BFgiLluUEv=`mXIha_?
+zfr(~c7-p)i14x^U_%u++MtEJsWuf|NQJ(1X{m=3$VWeFK9#$XIT_s`iC1~Jti)<<U
+za{P?yt1+^gnwjnTtSWRMl^lDY*8(^6W{c^jzzz|1lkR)wipSOUqym*x<|j{ef+~3U
+zyp(Vw0hn9^^ZIKUlQ70TaXNOmZ?ST_zR99em8no+ie3fI)B8dn{U&e$;zK7X?CEq+
+zn}H<GAGK37TPI6N*c6^aD*S=eqvz;*hJG3j&~We>(!bE(DO{!YY>3UFpGL#<oepQ=
+zcD#ja)KkU?oeI%U$XeJ>zkr<2yg>Fh45g6I(WsI?L+yIuSM<-#ALDFW;vBu30Ao0V
+zag5Szg5tSKt&mb8Tr4$;5!}EGNlqY(SsJBKp!FeInWNvlhqtL)IPqtRdf{u9WYhWK
+zV~n(A#Y>V%P=->|jw%~VwXkZ0eTTYtu^3~E)Qim-ft@?X8?REQAroaf3@$W`sbX|9
+z44}oo74hGr?){GZ{Hy#~;ukvbZzu7WsJqi4Eu#r(Ss;+wJuM$lx7-0cmVmuU*jwGP
+nE7Yxaz>X(imk4{OJN7PhYaOuX60oa;z1to8A$7%Y>%D&fw21k*
+
+diff --git target/test-classes/com/zerobank/stepdefnitions/FindTransactionsDefinition.class target/test-classes/com/zerobank/stepdefnitions/FindTransactionsDefinition.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c01aeed6719b401cad05975654f81e23eefc4d93
+GIT binary patch
+literal 3378
+zc$}S9eNP-k7=Pw?Ii%Fm+ExozrWGv|WecTH1*wJ?H94)ZgvP%nbGt)t+GXalGY6tE
+z=?Bpd;a^QO(f|Dz{UF9?X7`r0d)Ea>cAuGN_V@BUGq=k>|Nik80Ib03C=9_$9qx}p
+z&BagZ@F{`eHL0XsConKGyGvkjLq~$Zg@#n(+s=MdBs;trW9CvrhdkcpiFETUIcQtb
+z5V+q6^?vY^NOY5{XMwSz9f>`pm0Fo#TdHU$;mYvPCpN{NOxIQk%-NP;9U~IP!%!F_
+z409QWVMP$Lyh-5N_Z?;BzSxyUqJb}z(w6&m0+S7?gRm2N)4@}IzyqOzFXe%7IztCM
+z?ub;6Iz8Ieqb}q0Xi<-Py_>l^p{z&@i?|gGAA2I$UZVGz)dX(MG`w1j>EMw~q<XSi
+z&ba0d8$Wi<EUgo$r>lzuCVH0gxaBKZ$}31cQRj(zPt<v$Kc_suP^<GXf%9Q3!)JyW
+z!IQ9+&uMqQmI%{{t#5QJm}%)w95JopBR4)|wzwHi(y*qmhe9adgeyIo;7aaY%1&C!
+zR;Ee4CQUV|({$rQTGaGq8k%VqizINzZBy5O=DdkD=)?*f9kG3FEItro$GrCxLc8*r
+za1$+f2yGrw2cap1rjWIwO1VpT6j`X1<x-WK6=AVO#d5(2ry0ClcU0KO$<mn=CQM}8
+zJxyS`bUKb#3na@GyInw;ZdLx|KB(BTB9I;f3(}vRO`1L2-u`-Hi@?Si9lU)0YfAC*
+z`ELa7^>pF(@b&et_f&VAcf#^ldkT9|Zdoiio>Z;62aR=9ggd<{+S*8ajQ+p8m*$pw
+zG`6C9&ZtMz9KC)P?Z?u#qJ$svxL@@Z@<oD+{@@xBi_qCPYUA%}!XMWxM_sPauBHB#
+zmF{nJslQRB``cSMxmw=Tg_BF=n9)bNlZ0Yhx{v5o{}1H6dtr{jFw_ZL&)=fFEraib
+zim*dlKZYXv<u9M@8%$vQ_{IIO`4l$+ZonY^tKj~|fjD)%kKio8NH7lFegWin9Ms?q
+zybt?i9Y*m!mOcRIa0EC$kNKJh&-po&fnx<A$$)R-bq;42@ESL85yK^TD`R?q*FZ0(
+zanD54#f-^~F2j|K{VI-XIs4lw`#Tt}<vtfNx`#*pgxU`;VBqgpL@pQXj=W+wBb>l6
+z3GZfv_dG!lyAz)2YPwjm+vU8Ta=wRQs=Ap|uW4q+L^0f`b~k+*cQ-M-U(GptBF?Of
+z(-=Oe=A1u`&kr%&s_x?5>MqV;n5}lVavFEHG0auFTdQ{W5r&VenLe*(n#T}S*SUF`
+coxOu$q1xS7)$SHC+^uH%rkZI9Lt5SPf5hY~w*UYD
+
+diff --git target/test-classes/com/zerobank/pages/LoginPage.class target/test-classes/com/zerobank/pages/LoginPage.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c65d8c705dd7c515ce6eb66719498a55e7995627
+GIT binary patch
+literal 1275
+zc$|e(YflqF6g|@i3uOU8<^8IneehTxC~AQy2#K*lLkWfuW2Wt-47RgncNWEer7;mr
+z^auE(jCZyLA5{FXGjs1fbI!eU?|%RB<r{znEG3Y@)dZ$+ErIJub)W-j3z<%2F>Q>Q
+z4$NZCf@9$ZLs#GnZ-dvw6IBm1!(`s|Dvnzh>VP}Gs0t;6n)5;w*Q%l>l+G~>Z3arq
+zn%I`UELO!MrCiOmbd}FA)$+O@)a$ONopq_oD@Q~Te_Q8zkEk3+8r|K8vb>Zssl2MX
+z6{%7$DYH8F{Wq>xZe})m7JGs)@Xqk!N}#o?7zR$kifUU*`9ZNJwZXM5N+tC&Lo}V)
+zW{9o2Wx>#smr85|wW9F0I2Favmv>9Ny3IXl?4~oO_as$0o-esI=biA}B3G}SI<E-d
+z$s7IWbTsva$uOkS`F(!Kohnxqr=UHlD!H>BlSlhWAB^%D1jSEkWk?j<z$=M$X)@|Q
+zm7O!UY+Odag_|~R;kJc&8+UNmMkj2B{$I4Kd)zCCgFvW~u&`j`9`4)dg>B)1jT{!~
+zxz8(+VWdTPh5Mor9s461Xjzq765_EZ4~0i>UlG*NWIFS&X=?zf?$mknWW?5aNxR+=
+zgKhfSoKou1eEL7!zrFIa;=U;9un*(sk3TiS7pnYJ9FfFmdN<$tO+%`|R#c6f@wJVu
+zwM~ZMmN^<s4oUh~6ZA_*!A$>X?INp__HO!md|aTdw^g8zwu`L-mk^-?O$e<66j}~#
+zz|MXGJ4PgXjOcr^BN(K$o1}qJ#4t%DNemfe1CL>h&`wW)u_l*`c!<wrKOz?Uiug`+
+zy6_oo5s<@*hmM)TPV58P8}7e_rm2`&q%ju?O*Y7yLgqA%iBLR4v57G8WXN#kClw_@
+AnE(I)
+
+diff --git target/test-classes/com/zerobank/utilities/BrowserUtils.class target/test-classes/com/zerobank/utilities/BrowserUtils.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..375f1f7c797781fcad5c6701b01cdbf3bebb4d12
+GIT binary patch
+literal 7947
+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
+
+diff --git target/test-classes/com/zerobank/utilities/Driver.class target/test-classes/com/zerobank/utilities/Driver.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c61a53bcdc9e58eb3bc3e1eea4f5bbdc2e9ee3dc
+GIT binary patch
+literal 1792
+zc$|$@&u<$=6#mvfvi4@3gmvAPkhC!^tsUbow9tkoDIrNi+c-&^l!OGSXl+l{)7rbv
+zdbhvCi8B%>gpeo~4wXQvC`fUj5~v6j2?U4UxbSyys(7>OBt^Jwto6K|H*em2?|bjf
+z{`TmH9|4@edkT7?$MHN~i6NulRUB22!?74%6Y}*Kj>m99!4TdM!$}##3RLJaMig{G
+z7sIH~oD$1#${16S6w7bLFs>kliB3%7w2UbkZ%gPXJNznhB<wHPj;Y&qW~~`|gH@Tu
+zy_&wnij%&<Fqw{Ui@T>JgfrPi36TlA%p`OdxW#6@T9G*yjbfEFTEQ+E)kVYMV%}0l
+z+zM}qQ%ZJCzsVfCXjoTt&*fF_a@NqdP6?aLm5|P4pNU7d>n^t~@;cbowp4NK8q+6y
+zF&Eg1ZAHhv)(|0Uh0DfOL$4Z^sV}$=w@g}2EVxGL%8XI>fy+1}AzG^14T?cousx^5
+zrnm^GGr(~~xKPoLeJWl+pNz9A&S6?b0W(BdfI-D9=7_3b_I`yK<tl3saCwzGY}LLl
+z<GhLsm{+lYeG(2oGn~m*)-pQ{T*XDaBXBONSi-!7Y`dK;IQmo|H&5x^=4sxuTwY_R
+zua}tbSVD5iu`P3;#p-~2qt4Repm${~t5^~7^glJ}5_-1%&lNATlKUT3kQ&PJ6TD2=
+z)+#qW#}IhtiCf{algjA4L-9H84GD)b|4((cUG`%YqfrS8o2vXQWst3TMwL>PdfY{T
+zayYv}JaSt%xm)pydeOGHX*eZr=-0}R)#{948KwZG2ASDxxjYs5j&~EdXoI<4onj+-
+zW~+wsnU(gv@`U=&XLfEa`aIDpicQq1c3hHO|5N*wZh$q9yGYZ;)=L*1b(829dJ7{Y
+z+J`jzX?BdHL^3+qgmjl)LKvV?AqgZ9K{vSoU2nb-Uc>>CaU8@;fdlChIgF6*;kO9=
+zir=;H1|rjgh0thj9nr7h|E9&UpMEZXLGtLGzaQQtdGL=*#lJ|7<+P4<$e$q{9=(me
+zoEGzE$q3E5a$4M<MWdsAUj@F(f$;H(aCG`#*nqN*&U;Xon@D_z&~1!ws=7$kJ)4iL
+zqi0DN<ePZTw;0%f=36AmVwbN<+(T+v+ug*TpD3Dde6j=^<LIF=g%0c?Cidb3qVz*L
+z{UajsV`AYG;^-DJ^Cj_ehnTsG!)PLd`^e%K<nbqcRRoK>3H2@P!Xa7@lc%4_CQJH3
+ze=Yt9Lo#yoNQs2fr=_)ji0L?9-b&V(p9LUE=pLY(#_zG0@<-seQ>XdqI8I=P=+ktP
+R<|F<AVMrS7&-;c){ss1{#L55w
+
+diff --git target/test-classes/com/zerobank/runners/CukesRunner.class target/test-classes/com/zerobank/runners/CukesRunner.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..e408ff3faeb34afc37f2d37755a9dbc725d225e7
+GIT binary patch
+literal 690
+zc$|e&%WhLK5IxSbq=A<5OlfI(EC8wX5(y9jMPhYDB|t%<i^{o~-Z;6}j{K+uf5i%k
+z1s}jiA?CV?C>z*}eP)i&9FP6;*Y_U)o?^d;CU(2H+r^$h=Y=*pycB3YdOQ+n4ef*k
+zHZpDKZLG%RKB#fYnXSy`svIe&YrIUh!c=>K`&n))`GuSvD>Iia8bi*@VVskHm%wv@
+z-g_HePH%L5aPva#aHh_bz<^QE6^*plEdJUU8&uHNaD(m4x<bw(J6)<vW`ERS%EIk4
+zRYum_$+VSu%#-USdANj3d+?9)(IPcs*4inl5FK&TJ@4`hmm;71d-;daDpKR!zi#gX
+zElwtMT95VIeP`l6v)v|7AN9;s!O8VkzOr*V3FHG)7G*575qLNaRrxF^S5T0wqGA~i
+zR;~{mEvyTCdNA|WtZ1w9VV&%wg|@){|6YXOpq{%dl_})Wct&}^Jv5M9vQ1IzaO^OW
+z2?OmX-ypv7rhzWUPD)<I8pr-Q0hiEA_4O3{xSYOR16R1dkz<qTZEPJwcwEEvwBEqY
+SPq>BK2@J4(jE2V@kDcGmCb~=j
+
+diff --git target/test-classes/com/zerobank/pages/AddNewPayee.class target/test-classes/com/zerobank/pages/AddNewPayee.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c0375bfaaf6c4efe53549ee3d7b53a10f575b01e
+GIT binary patch
+literal 9151
+zc$~di3wRXQbv{R0X~k+}fgXS?9^zpnki-JE!Il6U3CRfSWhB6$U_9C#NrP51%j_&d
+zPTYr6w@%+poHUNpCau$u)^?0jM+j28iAmDbagw%)lQxN+XVW%q(>8slN!<V3nH{ar
+zNI<`S;e&f;?s?pE{`0tZmY05f=>;O%#Sg~l9{O;M`e}Lzh6^#8p^FtDJs+bN=#OLc
+zQTkXZy-1f!shmD8!zYCAlcn@0^r=#Mg#J{9m!kA(p}icVH`8ZI=(93^PKG~=(Vx>_
+z$kXR#_(F^xrB_Pmi!u5V{iO_lB`aT+;VTuy^lAycCL4TB4Eee|eIrWWl=)jR+Cbly
+z;jiWOI~7zwuZrB?%J6qGd^bjaPyZ05e_TS}qkoD~GyQXn{)N6TLjPJph4gBa{#_LR
+zM~wcH{!51cE}<XD{67^Gq31>MkD~PBBJ%#kV$@2n$C#M$#03>pM9-IS1io@n2^Yuc
+zNsi{23x%%)8}bt9;n)%`Wi5uGOkQumzFaQD(kL&Bas^Y7J!u&ZQ(d?1jK=M>VV&0F
+z86#y_W_BWe)EMqa854%(wldWm%37{DVH`0t=5Wf`XIZwZyQXbrm^OxrXR_(E?YQwy
+z(@M5YK}BIA1Ll=OiIkqn?5P*VguA0TF=l5BtNsMj@`PjPuF<YTLsEA-&S2{{*J4^b
+z<eF~E*i+xG80vByb%wBrXyvG5CI<}HHLcN%Z#DMPbAoq)T$iJZK)GXN4ACAiFAbOv
+z2}ziuV}_nI99X@y`;>l0k7r#o74J4Pg2<8qbJWt^tYa|kxPrX<YJl#Af|Xmv=w@$^
+z=7f<-ojjS+hm90;XI$NJ_rq7Fn}^KgeS7MYcsc1|W;-Ws$3B_xQ8=kkI5}cF6DO6N
+zG94sOe*5*vV?m_7{Ra{6V1Ehzb?)!UZ@(USe}7H5_d9kvi40}B$&<@vPS$J|dfH5k
+z1Gq^?Pp1t>#L6aY%N?7Q+b~Z~Q1Imxui9+N(4ASK^@|A!tH|8o7-^(p`<Rg!AGXgj
+zt?|5cj6~LP3@c$YdmPPYOk+|cig%lq>Fz}tG;BV?6lu4U0H?g$w2a>D#IWHE>ZmKG
+zif$Xg9MK(9-u=ahJ7#92P80S-`~kzUhjnW_p4LZ=OnhH5*=tPp>r;k-q*~@#f7fg|
+zpspIc^i1j2XneqRu-JNB8DZ%YYRh?K1aQj8^f|pYTFP;}rC=2T#}t#K?MqAP1MmS?
+zPmK5IX=P`WE1~R+;g};+2UJ#foJBFf@ahl?HbZTxD{>w$?DR^Z7e@6t?RF|VVaaop
+ztC*@hzXl|~`kanja@U6_4%te4O)7y{CeXlCkit;y@k>U<751VT02HYNfuO`3D0Cro
+zNqq_`Fm`)zM7cVEe9)e-9mk&BFFcH`8Ww5-`yKO)V3RNujM%GG?KPnEz^O(1Y1WK;
+zjIH90dfKP<j5KtKqb2E7HiHGgUY@fI7JGPA=Yf-NKzSa#UfC`YH3#ghbiatJmX-xw
+zVbIRm8X8$xQRXS^$aR5ozaPv>ZcLgZBZjJ#Hp87X3@g}upOp**Q7#7|t|#2Ap31Xt
+zUf5(Ao|Ji<zI>FIGu@a-p?dqQ_W8#PI(r^Q84o0F)bNn-UaJ~5hZRT+TtOZNBA#(R
+z&3_pHiV36BluBNjSFT${t40}eHD19hH9AfMQLfSWMy>^Cn{B%p7u~JLaL4Rqro5O}
+zmGEkf*YMgX*J-?t*GGAS#vA#jC~wlZo*OjY3`M*JD(OBt8RbTeo48ryt+E{FZRk{s
+zA59u>r)M<YK@TH~;~L-0w`hDT?~L*;jc=2e+r5<*jazv)0@Tyf6XiV`@8vr*zLWQ9
+z+{W!1@8|Xs?htEtqL@_bXq2D<jXU`+jSLz<W51?E*JuJ_l;K*956}}D*)&kXT^b+c
+zyES?@cWd0ky;1JdxS!jZHeFlYMfo0$4>1fHq-UahSmPs5&PVC-622E#ijYdt_!vDN
+z<>RvTkVfz2H=wbPwQSo~r;F<+O87pFM#ZzHt9TZeb5u87@eQ%MUt^tzHBNA{L>frZ
+z89kLXG#=r#YMY4(*=Cf-G&cDZ%;j;7Ov#y)#uE(dY))%*uV8#yz;gI5#C!2GgQ+%z
+zp-s;i{dhteUYYu6@w1nmF4u6pbD=V%i_Ty5Dq__noIZ^EWUAYij^Cqa#`l{UIme~d
+zqU3QlY?xz~>}I;An1&vkF`UC#Kx-;fwSCld#{@`7E!cH)SFg=SVw_>H?uy6VWIV2}
+zTtlvL)@|6lr=IIi#J6sZkJzb{Jqd4{<+_WxrA2s6E1iYpiV1z(Xtyn#0kSimklvOY
+zbeqE3VOaNAy?}RKQUC*V5T<o#J&PtYG%XKfXv29>bT+Na0oD|1Q@E5^w&;d9t4464
+z4{psZ;dn#Sf|k#IRK(1TSK$WE;UX1DT&?C_rE#E{L6R-cwc<I+C%2U`J=2R2%AH0{
+zbDMVG@G0-Wi~`m{#jw;kjbkFyHEP)o&V&rovJ^Kyx64WzXZuDLIN7@7Zk!#?_?1wN
+zBR4F%%VyWQEY}zn+)C2AlQFskw5XZeWO+kZxP}57)Ehy~k>}k{*3T}>)meArLXZOM
+zRIjdVy2KvoSC6=?-L`OUE~*846?-(M+Z*x(Tw?<5Oi#rJ{fB*tgptW0AfYY^_Q!Gs
+z4j{|$j(bYqNRM~XYL3VCp*v@<-KZ(oXigd<dN$?O*XdTWF0V=fvUCwxsXj@ievtF+
+zS1tdpYskw=?@rJ*<$vvZ8N&?AEqfC6->^_nRyG`5h*Sc1eNQXr$g4%UgI%%Yi5!tL
+zU~U_p$^d!TVoNXb??I*=?+4Dfgy51h;a^XB5DnGDD?@k?khHv|tl+lRHl?!PYmIU<
+z&ksl5S5WTD4ZRW}n-i4Cq-w(}LNM@pe{DE+{_Snm0{Hpl+ZwJVUqiF6x&f`;%r|!P
+z(DoCH9T<LxJt)`N?N>R@JI<z68^ckMH2t4NR;J}Q23&9ZM*P%LUk%dhy05cqF1C|=
+zs>p9MDOlN%*BwW)Rzm3UPXD1bv?GS$vg3qzquu8Mz2U4J<VC7`F%9H5k@hj&89*Nu
+zCtI&0GV?C&H<;F$po*n04qp8j|Gxk=r>FZ6NO)I=G`03I$F}UlmZWphfxg3saI0Gz
+z*8OG~rO6F@-!e>l7HyTSixTCNr_yh4_^e17!FgNdueQr!i4s+aML8??Z1lg4v+e;>
+zd))8~z`Lw;>hj|Y*x!hj-fi3C*)#&(WmyLFq0S9t?K|@!@^yG0AP3NaQ$}W^Cm8aX
+zy^!GGRN4q(9}0=Zd=>ayOAX)#&>H18;e+9tY{R8@aXwl{{d5lzl@Ze+8o)S+w^Gc9
+z@$X26j$*nujBpIo@i4*=rZ<EUPGG{f7!}a{AQX^(CBrbLM3`g}lMzN3!89617{g?S
+z5l&$m4<n>7O@t9FOm-L{jp=k4!J%b%z~?N+EJ$(8jJasb1>$Fw?`JR;tHo-X#He`;
+zbe5(tGd)0W^o2hOZuw!mW6LxZ9NqF970ytk@sh0d&QNjl3`H+eNddJ)Ry{^#HIa+7
+zgy}I_w(4C}6}-jdDaIt57pl$IQwhd9p=KX8Z>LJ?L^9k>w^BFlp&r^#eaf&~yv=>X
+z<mpZHpfa|Deu{n?##Pb|`WdVhLVhFtEC7knLn@^Te?;*py*WzdW#a44(Zjw^zX7ob
+z=IwB&^df0YJxv#>Oe|fChZ~qaO69%H7ilR|<1{UMjEW*poqPSY!lwfJmn*vt(Q53s
+z1p#QHBf$BnvbhdCtErrR9<)N)Ca``x{erUoAq9Ei4=EO<N7nrS<}kg5e$g|JA4g~e
+zoy!XH#>R?@X{wCeKTTCLRNYvp-j`3)3VHKhBKLbt-r@|c?5(Jop&Og0skSA8an;Tu
+zjH`DRR~KKRHAF4Zri!)7v6X<Ju4IPRNoea-kj_yxp4aCV*Q>>k(1v4p*?56&s)<a~
+zCjY%2@6|<@sDTKJ$cLI}E+MW6_(78YOws|{Fx8;UHleC^;kgw>)QKYMM$H^T6$~NS
+zlgRA}<n|Pj_#ve6F9E>E5%}{6_=^bkq=H^S6hM0!TwY>areDTW0W?2Cze2x?{X6mg
+zYxozzE|c`@h<_2}Pt#lRRE!<R=xv}zRan+g!Rt_25~Y5XJNWx3MrI783hV8;!s6x7
+zEopFShBn8h3E^73J9tFmH0{Y1O@M6ghiEH85uc`QvW!~FL$<ehRU|o0+iNc&r%_RY
+zXXFYz8R*p`<(hq5cOuaVrj;VUYmjnlkYe?~Vhg-)L{i;~wAu|s4giZjpm7vPn7}|V
+z+zam;;nO?lH&vpZ^3g0smlSMduY15R^>P3u`%V-{Av9Dfyu3225WKcfA@IVz94Ivl
+zM(;wryjpt&62+L00hro{J&^XyJ_|~F=c1GcNK2$9vRXm1%7dgxASs%cVqQbrL`yI}
+zipqLB)xxPdxV0HZ?}XWVVNxfIx|iM^xDKO&^f`ugaacp|d8=}`7Chp5A>=nG*CWv2
+zxn2a$-wOKc%YHj)gIkgUfhS%Zdth_Z9FxycO)uhl%RGXFcLj>6k#6?G>-qE^B<Fi+
+zDg6$pPk??79PdNV`90c3??(syfbwYztY|_*e+T`x3TK<|T@<C@g>wbu-lmE}LRTfB
+zYxF`V*^S}mYH+<L2;O;kDxUSv(5(`%ofW&#R;KB;9u=~tOLRMq0r=bEN3IoNF0P{8
+z7ih1X3^R1cG~IbL|D3oYW@}&_(UVBRr_fWMM&JA(e0~PlpGUer8~6nqf>`wf3-M+d
+z-2p_zo7KSUchwmn)<5A}|83v;L9dT0V|xN)=M`g%D#knyn&x;gKT;a7UKteP7K&kf
+z4tstWlnbDJ1k@Rn&_(3WCD8u}5qTbG!V7^{HF?E182C4+yb}EflviG~mP@o&s%UwQ
+zDJZu01s-R?E4u1)9`DQdIK+uu7`)@`V;En=wwGc2#}S541jiXv2IkcV=G7trA5@3e
+z`vGUJ-ithUWZR0ii_~5~75kAjGt|)?z}pFUJ;)CTyyvL22eD|HrY@`=yh045yBk64
+zej0mJA;sfCd3fpbDXhMP_0NFvX_UmvI9Wc6%f#mbptpff%Az0-=qg-4K0v<@op+<i
+z{s2!N(3JvooC*}sPpYbjg6XNC-j6Gn0ZguMp~9sIdX~m!s820~!uxrQUjS^c;QfoV
+zmcEpC^{NZ5UQho7`^uLA%U94>z6$DVpnnq_UjvX|2Vmbo@_g(6wXb{-b?te!(??Jf
+zm;7j-zv5#0oji230G;!pI@T|s<GZ0co(<K}vVe~7h3fcFsE&gR==gq!jzaoF#q}JY
+m#T+B%GyDKgq9<HZ@hL|CVDt<bzpBQ+QRBa<@rN>U;r{}<G$e)q
+
+diff --git target/test-classes/com/zerobank/pages/BasePage.class target/test-classes/com/zerobank/pages/BasePage.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..7fb3300198c148171976d9dec32831f9e00dbfb5
+GIT binary patch
+literal 5327
+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
+
+diff --git target/test-classes/com/zerobank/pages/FindTransactions.class target/test-classes/com/zerobank/pages/FindTransactions.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..28a74a21e84110bd51fff9dd0a8770fe8597450d
+GIT binary patch
+literal 2988
+zc$|$^ZC4XV6ut|{Vu*mKC<+)Wnt;aC7itS)HBstIKx<Ic6zOC$Bx5!^ad#G>|D)&h
+z^mBhedrr@(dQSTT`k&g<XLi>RWwCt7+}WMy-g)k8_V0h+{Y6AqX){4XbbT26e1Zye
+zD?ztup`X5?I|;f=_w;hVpJu42m&IW+D8HWu>49Dzn)I!H{m7(}Ny`QuvW3MRk3Y1T
+z;<s(y<c=~ZRg`WmCtKWk#d03Exg-2$ZiQDO#GFB+k9<doCVwJ4QL*_=$B~LDAsx@4
+z$yjyIZ?&YWatp$#=C@#?+wuTTmqqo(eA@CoC7Ww7F4WeV+G_E&Vh6SKszC>;uGrvi
+zn`Mu~n%tn{J5|fK0wi<>ZD|Fx+FD~V@L~jl!l=hK;7zq)OONM$r8-p8Wy@xsH=nL3
+zCxu_u^DT>eUW!>-J6j3hn(E-X&+TQHZtEVZiVb)=J)d5Pjx?^{mNnVNOvF;F$<^|@
+zusPsEO<CpkGtRbyFdn0`_#Oq7q$O>+4Ihnx7c>IU-fO}U>N*mWnR<fo7GMUh6otc=
+z{APu_%M6(|Xjq5Ke!^U#pQD#OsxFYtGet`_b3brbR+!VswOEaNLB^L|=6GS8Jmfy1
+z%feF2tOlhknc_>f!E!cpYPphfg;SfG`u`F%6{{@;B`~~GAICxJrE5^1Rp(YCFE>#`
+zCB>}9B5MV-O?qq+TpbA6yw8k5N8%U(*tgz>9DBbl1-hLjmhfA)WL2Fy+}L8OzATsP
+zd_m|yB}&qFt?1#%$Dz5PuT9cfN+a8ODV3*O)>`DMF00;PFRk>^(<D8k=O&et^c}65
+z^dd=X^u0+?tB_?<HA$S-lT_17okWseQo4^CNt&SHB&BHBppk9w3U%g|_$!|~7Eh8*
+zO@mJFA%_N?h(YBU`V~8n|2Tdq?@wnmK@K5a*K^RSaJ#Jdrpipsr;YS#uH|xzS79Zq
+zrw!!ntZ-VsD&No*jOn2hT#=i)r;avRgBPTO<gW--$IesCQDA&Fw$5ToXZ!=#d?jq5
+z1l$Y93L2!wk>*pGU5hjX!qP|_AirhMzD->h2A$t??FTb+{F4`ApsXWL?LwT*>}F{X
+z?R9#WAmm;7+T-qHyg*D3zGgx#NH_Q&&=B}mh`+YO`rSR;e>k#Sz+Y4Y-5MEB2ruk7
+zUJWMIbHvip5Q8q~a(c?%h^BPd)R(d@_k3GrgQ`lWm{U!4loop0<4*NH--0t^nQ}3{
+zGtm7ewRGnptdrXq;cUnTj}jLa-2ys9x?3h~V5AnMZ1^pV;k%B*;R=XxT=Y|C)*~BX
+zlivY9n|qU?;@r;S*iBK7q8NCmLk}u15s(i`J~B~Ywp|j6&zbZZLwrx%(9oa8(J6d!
+z4B<Pa58ogMNq>nP!c#xwVf>DGGy-vS$H6g=Mj?*J9h`s|i!(J2F%frg5+W66>J-Fh
+zaR;X%CgTpyP!Bek%~&%y%0U{C`=<XO<2P)&XbNj@@G?QuSd$@u&e3^DgR*oXQvL<#
+z9>~k*-eE_JZ>anH8|ryW`?_c;J2d!)dRGEru4La*pFuy<er)!`#;;K84z8LY6YC7t
+zFF^7t!t*73`U=<0(nY!!P?!#{i74n@jy?wo6VDg1>w@M<x&(*2aTYlI4_!3riV4F8
+z3}1~H{}?fz0pkQ1PybH+Awj(hsO@wjV2_jS@PwT2VZD#4C?d~`i0Bdm^MJ0<!w$|f
+zZO$|BE9873;+&=d_^CN#%(W>#MW_)>8Uv$b7(>15`I8Pj>poX{O9NdUOa`E>brNXn
+t6ZAZ|c_h?t-#kWh!Oh)>rq-J$FG#LIugE7CmHKsHsf%vl-OXTK`VSEn63YMp
+
+diff --git target/test-classes/com/zerobank/pages/AccountActivityNavigation.class target/test-classes/com/zerobank/pages/AccountActivityNavigation.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..2b6dd603a0181218a141386e65a86756cebf06e7
+GIT binary patch
+literal 2888
+zc$}40ZC4XV6ut|Agb)QIXc21zs0jo~eQ8Bec~dHFKq?Wd)Y{4J5Qc1a*4+t+eebVm
+ze?d<_wx>s{J*PjQpZbe>`poWvR@avv$lRIxGWWU9+?oCBpC^A3(OLRFO?@<zqC;t#
+zrOO@k7G3G2Ir<<)1--bMqT^c5r)WgW4^uR#<wtrbYtMx=Ez-3lEv0E6eXNJ;9kfi9
+zEVln7O}FTFnpWx4B;85UX9gvGwke#NZ&0o*y;@1S+_}d}KDW6envK#;UcF-T26xni
+zL4DVojuH*NB79M``LyFm#gvc^!jHy=`%TxCo+`}=$C}y37H#)krq&I*Q7Tztb9KtJ
+zneSiB%e6J1t5Z4OWzKm1PG~&&j8qH>!&y~Y+u_U$g%t>f(V#udRAN)8?TSz~H>jWu
+zrgRh&j$csxzA6ll=BG_lqLkcp<eVQyXv$pYW*uaJi`b~y$R2nnY{?vh4##?yVGF#{
+zrpGOzW|?OhG!(yU;E~fVK}bi{lXdQ~8qg2KM$GIugs?47x|iiv2u3q+s?{lBUCc9f
+zmxYDSTX}f4Ul5K^mkeqx46mSqS!p3hS6MiGvDv6{ucApdC|i~$vsaiW^g2=|)Vjbi
+zkCjc?C_UhwtTLxwa)H7xMRe}4xrmmk1$}`7&$1V^2K5%o8*G!6Z06KT%gO_(6B<%#
+z$614T!2_qete9C}U~UAeNBB!X5S;a8;k!25<{&!7@4H|@Puo52H*IB5i?xJRNRL7J
+zS9WVtl$HZWq->XNh`H0^YYbb>E8f7tF3YB8@;RYl9C;}LW4ee8jnauE-ObSFgvBB1
+zPf|5QCY{Jof%-FaTn{697}P^f4;Jwxt!1c2xGl%t2(8W|GPFVUB-t5i5Kwo|NU40~
+zF?WHhb!qus?Ics=X6PPyN%AwK=uDED8QP>RgGT?)=^E4@<37WDz7%wC_wy$RHu=3K
+zv;F5f;97M<lRbPJRKEHV!UJO3!mQ)rs&Q4pg+LP&hU0prTko{dM8}t=eV=>q%&=f`
+zCBl%8!4QKAeK}Nk-Q%de4gk`e@O%{>2e+<8tuqLOuYFvfWoz3Hnyghefx0)uBxGp`
+zr70B1Sz{ti_X*dezk+L-!++GBIiVwSYo2Tv1|4j$I-iw}$<$4u)-m%Ha};VHkGX*{
+zcQTIH{V{NG9<E;5sCMW-P0>`s7E0*G@Z=WgzX1gRB(|79af!nG@Jf;%=zjbfUy-Nz
+zgtLifE=n8LFo)+sdfQ3*7M)a<vfgxYsPm4)y;=Po;n??wXA6t=2wVRub1a+tN5jCF
+zYF`#u*>-u1`)W+Dytu_Iv+ZRZ%0!aB!$p20Y`6xm_M-uO?)&gXPm-bE6O4zk>V$k7
+zzau`q1Cfg}3_uLV8HON^#u<)59FH^PAqsJZVTh49Ly;1g;5EcJ22%;rfNUFiM8+?e
+zv_M7F9w;;PZZHN8bdpX%8g!b@M8SW<y9KgV%(gtF)*q>B<Tpw@rZ$6qqDnE_zN<_|
+z%E@9jwX5uilq1D#dRN&QDSM0AOrXp_xhGI+c&!1vF_c8$ssq&Yf|?^>VgyW_M&Xl~
+zT}7Q0RCxz=t|3B~aUg^mm7!<v(fcUmY;cHey*)iW`>-6}t!@PYt&rUSu=g=_8MIIw
+z{hhj>va~m_pQbcoy0D#2lM7>Z({$6hAWa&ap2w^uIGLRsKf}8Xa$>jgKWN`Ay?8{~
+zh0%w!fAK_+`h23;mq7AgsRxrMsG1(q0cZ|Bg)>MgjN@SC9PH=OmJ`rj1TUA6coLea
+z0OFZ2<u1et{Aq}q$qVprLF52p`T=ebO+E>00`sXL(=>ernTG!t^bLIp`wgs9Sg+uB
+F^ItqW(n$aS
+
+diff --git target/test-classes/com/zerobank/stepdefnitions/PurchaseForeignCurrencyDefinition.class target/test-classes/com/zerobank/stepdefnitions/PurchaseForeignCurrencyDefinition.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c45c61117af209d2c456df7f4d8b4fdaabf254fe
+GIT binary patch
+literal 1479
+zc$}qETTc`*6h7rD7X?vJK&5MpK~0<|q6RN95PaFFQG$<?PUq}yakeFG2ZH~~Cleq1
+z0sbiCX=eu3h%AYdOi$Z6-{qW6fByRZ0|1`D-DwzwwMpQU&|)z0TxsQBG8kQdu*YC*
+z%jC#luB|k_E&CbTU6B>Ev(PqD6nny|u&y`9d`~$BuiDb|lP_pZCiLgTc|6FmL$u0h
+zm%J~n><NcE#-i%#t<qZ5@^~9Ns!G{p@YMG(EgjlaNQus&OT$hBO*<7fl{Gk(!u3)w
+zG6u^ZO6^r2_mop)>b2I!i>S<CwXIAdOBoAE_Qjz{P$zHHAqLU$Ls67iiSr=N8*v_X
+z8gX8W^G2KpaUR9jJEkbik<#79nj-72XUZZ^GfYWQ6;-e9t^Z*r7vwU0Nwz7*er|>X
+zn97?agVs<4gOxK&-0j5*Pwnwjd%Uv8GvovIp2hBa8~l4i{Vil!2#={W&ZkGp6Ue6y
+z3zR;TD^AYhUmiYH9wIT1#M~QxLd*j(uZj5yF&F%lxP{gloA&8YL>CA8nk#ouh-1u~
+z9A4)P6gQBwaiQW+d$d(;^`EhEA@2>2tk<~dkA{98+)<&k_lI79$Dw7jFb3lcUi{Zp
+zVlW@uUkKez-evpLQ)s~mUHI@!01F~CPS7f$$S96K{08hRO-5j{P6C=;qH(rLfGL=!
+z$Y6%%BN6;4uHkRs%m9$pz}dLZ;4-~e9L!OehpRQyMkF|cX+AP7RUd1nFk66YG&Y>q
+rE6zm<OT*nQp5yLD#dMRx@^Ge=bC_yRD->3TGp!Bxbc@362)pwerPOv7
+
+diff --git target/test-classes/com/zerobank/stepdefnitions/AddNewPayeeDefinition.class target/test-classes/com/zerobank/stepdefnitions/AddNewPayeeDefinition.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..9ec60283cf63f78658c265c09b513f831259336f
+GIT binary patch
+literal 1319
+zc$}4!&2AGh5XZ-9n$on8wzP#Nd^iZ9@YNMUh(i%lMFkw9wjx!omUr!K+-}y<dN)x(
+zJQOD+4m<!4g&2D`G^K%xNb8xgJ^%TQ?fm%p?K=RxgnLz(gS!hr7obU?@=C=jeNAAl
+z^{`8z{6-5&pw?Eg+|T;HOpdr8;mlfF2R!QXMA^8QET=tX2t02Gy6=6IiS~JX>X}py
+zgbYzu>DYL?LhQ@YAs<V*CqtD_?+{q!LNHumZi%JbC$RM)i&NE?U1bzj*o|YIawkKe
+z(N@|EvcOS!Cw#~~8GG;4P+GP5A&)XdTE%h{RjE^@PW5S!NS;c=VyrfB)iR^vV;1Tt
+z(j)7sIMhksl_GGzb*_})$Y2}x_RzZ4ckEd$ib+VId1=NO21N|&FsQ?zzcJ`Jj9y<F
+z!;d99>d7f|8@2g}9fY9@uqhp~_hTX1VS*v+1U;Ud8aCpFnJmB!Cd{H}%<|%bnV!xf
+z!F<VtGJ^;u1%dj^v&BmGXrqFIVm!reBjlh32h}0998ahNp$}+*LJ@^dqtF6no8~Ok
+zmvoAyF==}y=|-#V@FE@`d!01FQ*)P5G0wLS^};&d=%j^D`L@rqOIJHOO9J^;*(<Hj
+ze7M_IeHqFyPvF^qKYIczXLJYti40O`LJ9wn_BRj23gcM8$U{r)?4z$hzMxZr1sp4G
+zvI19dT+TPZB2>{5SVF(#k{`PmE+$r|5=oJ`jNcMQSMj@MpoV4zRtu#UPGE*o%_(i>
+xi-nT)*5Ephe`v0w*|?l;{U3CjxzY_ZH(~2Cy82(}>d=^?D>QGRx$Ok*`~q-?N2LG&
+
+diff --git target/test-classes/com/zerobank/utilities/ConfigurationReader.class target/test-classes/com/zerobank/utilities/ConfigurationReader.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..b23bc520148fca04970905a2c12217243abaeb37
+GIT binary patch
+literal 1191
+zc$|$??M@Rx6g|@xwp|v1Litd!1+<icEaC?u2r97&p$f5tgrC#xP#2cn&30<UH}MJl
+zE0{nci4WjI8SiWxTC^tq=*--&bI+Z#)1SY-{{XOr4IKlRPM{w-9U5jd<l~st5yPB@
+z`^q(~mU-ndH7q3X0E=-v)bR+9b@bqgh9wP88Fb5Y5A15eb_Bz4@sNMuW?kBjxf6K4
+z2&64)D-7MMwrk5ZhG=ePk0G|<RVcl$XuINV{kSZGU0zlI$)aa*XO9QAvYXDBd~eqn
+z=8BegY<?1fSLW_f*u+-w=0?b%9&l-U?mNLNBA}K%RUw-kP8hPe1~rGfRkI`m+pVt5
+z{OuxwN8&{B=n#spT26C}z5|+f)Aj3;qJkeYj5R83&n#RIQ6ZxtQdjZK?bjbI;VZHf
+z>n%xc9lhaxb6CCP)dNd3?sK%mX!8okzz|Xfk{C2_3%40Y{?VN<taglf|4J5xvCJ^k
+zNiqY^uwq~pDTcug#5FuOu!ePpbb(XHN=AAa$K#bu3qPaoXhOpa123^`;FSW)|G$O|
+z{Vfr;%ZI{}bd8;KR9}>8PQ&I}*W4z7%ILBjuO_a6mQHF?&=p0!x@=cyhhSUk4R&xd
+zXuh%>m%atR;U^h)18xaS(6bt#XGUTwh3FKeGYLlPFj*$;jP|bl1=uMaA{e2yJ9H*6
+zN~_UGz!+|ZKGL{Zyhzz97C%EIe~#$aKkDzc)yFZ8JK>(bYW_JS11wx3wx8^}K=;-q
+zwEYXjzai4VOwdpNg8r>D7|Gsq+#tK}G^|Qvk{*9F?3X28AWWS)4iQhqF^vpmjAM%W
+n&XQ%)WsHVd5z0$Zbb_oY;x|dFVhj44iIg?;D9ZQ3VY0sgQUDa}
+
+diff --git target/test-classes/META-INF/zerobank-automation.kotlin_module target/test-classes/META-INF/zerobank-automation.kotlin_module
+new file mode 100644
+index 0000000000000000000000000000000000000000..a49347afef10a9b5f95305e1058ba36adec7d6dd
+GIT binary patch
+literal 16
+Rc${NkU|?ooU|@t|0RRA102TlM
+
